@@ -9,16 +9,4 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    /**
-     * fillable
-     * 
-     * @var array
-     */
-    protected $fillable = [
-        'image',
-        'title',
-        'content',
-        'reporter',
-        'source',
-    ];
 }
