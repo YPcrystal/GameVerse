@@ -27,7 +27,7 @@
                                     <th scope="col">TITLE</th>
                                     <th scope="col">CONTENT</th>
                                     <th scope="col">REPORTER</th>
-                                    <th scope="col">SOURCE</th>
+                                    <th scope="col">RESOURCE</th>
                                     <th scope="col" style="width: 20%">ACTIONS</th>
                                 </tr>
                             </thead>
