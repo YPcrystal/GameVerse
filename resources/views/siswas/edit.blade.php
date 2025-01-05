@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add New Siswas - NilaiSiswa.com</title>
+    <title>Edit Posts - BeritaTerkini.com</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background: lightgray">
@@ -14,9 +14,10 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <form action="{{ route('siswas.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">IMAGE</label>
@@ -32,7 +33,7 @@
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">NAME</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Masukkan Nama Siswa">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $product->name) }}" placeholder="Masukkan Nama Siswa">
                             
                                 <!-- error message untuk name -->
                                 @error('name')
@@ -44,7 +45,7 @@
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">EMAIL</label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Masukkan Email Siswa">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $product->email) }}" placeholder="Masukkan Email Siswa">
                             
                                 <!-- error message untuk email -->
                                 @error('email')
@@ -56,7 +57,7 @@
 
                                     <div class="form-group mb-3">
                                         <label class="font-weight-bold">ADDRESS</label>
-                                        <textarea type="text" class="form-control @error('address') is-invalid @enderror" name="address" row="5" placeholder="Masukkan Alamat Siswa">{{ old('address') }}</textarea>
+                                        <textarea type="text" class="form-control @error('address') is-invalid @enderror" name="address" row="5" placeholder="Masukkan Alamat Siswa">{{ old('address', $product->address) }}</textarea>
                                         
                                         <!-- error message untuk address -->
                                         @error('address')
@@ -68,7 +69,7 @@
                                 
                                     <div class="form-group mb-3">
                                         <label class="font-weight-bold">PHONE</label>
-                                        <input type="tel" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" placeholder="Masukkan Nomor Telepon Siswa" inputmode="numeric">
+                                        <input type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone', $product->phone) }}" placeholder="Masukkan Nomor Telepon Siswa">
                                     
                                         <!-- error message untuk phone -->
                                         @error('phone')
@@ -78,7 +79,7 @@
                                         @enderror
                                     </div>
 
-                            <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
+                            <button type="submit" class="btn btn-md btn-primary me-3">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
 
                         </form> 

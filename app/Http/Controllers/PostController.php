@@ -38,7 +38,7 @@ class PostController extends Controller
     {
         
 
-        //uploa1d image
+        //upload image
         $image = $request->file('image');
         $image->storeAs('public/post', $image->hashName());
 

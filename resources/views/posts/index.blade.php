@@ -25,7 +25,6 @@
                                 <tr>
                                     <th scope="col">IMAGE</th>
                                     <th scope="col">TITLE</th>
-                                    <th scope="col">CONTENT</th>
                                     <th scope="col">REPORTER</th>
                                     <th scope="col">SOURCE</th>
                                     <th scope="col" style="width: 20%">ACTIONS</th>
@@ -38,7 +37,6 @@
                                             <img src="{{ asset('storage/post/'.$post->image) }}" class="rounded" style="width: 150px">
                                         </td>
                                         <td>{{ $post->title }}</td>
-                                        <td>{{ $post->content }}</td>
                                         <td>{{ $post->reporter }}</td>
                                         <td>{{ $post->source }}</td>
                                         <td class="text-center">

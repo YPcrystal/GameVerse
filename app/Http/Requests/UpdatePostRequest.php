@@ -23,7 +23,7 @@ class UpdatePostRequest extends FormRequest
     {
         //validate
         return [
-            'image'    => 'required|image|mimes:jpeg,jpg,png|min:2048',
+            'image'    => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'title'    => 'required|min:3',
             'content'  => 'required|min:20',
             'reporter' => 'required|min:3',
