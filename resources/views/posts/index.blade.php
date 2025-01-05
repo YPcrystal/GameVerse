@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Posts - berita.com</title>
+    <title>Data Posts - BeritaTerkini.com</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background: lightgray">
@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div>
-                    <h3 class="text-center my-4">Berita Terkini</h3>
-                    <h5 class="text-center"><a href="https://berita.com">www.berita.com</a></h5>
+                    <h3 class="text-center my-4">Berita Terbaru Hari Ini</h3>
+                    <h5 class="text-center"><a href="https://BeritaTerkini.com">www.BeritaTerkini.com</a></h5>
                     <hr>
                 </div>
                 <div class="card border-0 shadow-sm rounded">
@@ -27,7 +27,7 @@
                                     <th scope="col">TITLE</th>
                                     <th scope="col">CONTENT</th>
                                     <th scope="col">REPORTER</th>
-                                    <th scope="col">RESOURCE</th>
+                                    <th scope="col">SOURCE</th>
                                     <th scope="col" style="width: 20%">ACTIONS</th>
                                 </tr>
                             </thead>
@@ -35,14 +35,16 @@
                                 @forelse ($posts as $post)
                                     <tr>
                                         <td class="text-center">
-                                            <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 150px">
+                                            <img src="{{ asset('storage/post/'.$post->image) }}" class="rounded" style="width: 150px">
                                         </td>
                                         <td>{{ $post->title }}</td>
-                                        <td>{{ $post->content}}</td>
+                                        <td>{{ $post->content }}</td>
+                                        <td>{{ $post->reporter }}</td>
+                                        <td>{{ $post->source }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">SHOW</a>
+                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>

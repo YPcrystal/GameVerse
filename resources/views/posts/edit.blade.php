@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add New Posts - BeritaTerkini.com</title>
+    <title>Edit Products - SantriKoding.com</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background: lightgray">
@@ -14,9 +14,10 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">IMAGE</label>
@@ -32,7 +33,7 @@
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">TITLE</label>
-                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Inside Title of Post">
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $post->title) }}" placeholder="Inside Title of Post">
                             
                                 <!-- error message untuk title -->
                                 @error('title')
@@ -44,7 +45,7 @@
 
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">CONTENT</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Inside Content of Post">{{ old('content') }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Inside Content of Post">{{ old('content', $post->content) }}</textarea>
                             
                                 <!-- error message untuk content -->
                                 @error('content')
@@ -56,7 +57,7 @@
 
                                     <div class="form-group mb-3">
                                         <label class="font-weight-bold">REPORTER</label>
-                                        <input type="text" class="form-control @error('reporter') is-invalid @enderror" name="reporter" value="{{ old('reporter') }}" placeholder="Inside Reporter of Post">
+                                        <input type="text" class="form-control @error('reporter') is-invalid @enderror" name="reporter" value="{{ old('reporter', $post->reporter) }}" placeholder="Inside Reporter of Post">
                                     
                                         <!-- error message untuk reporter -->
                                         @error('reporter')
@@ -68,7 +69,7 @@
 
                                     <div class="form-group mb-3">
                                         <label class="font-weight-bold">SOURCE</label>
-                                        <input type="text" class="form-control @error('source') is-invalid @enderror" name="source" value="{{ old('source') }}" placeholder="Inside Source of Post">
+                                        <input type="text" class="form-control @error('source') is-invalid @enderror" name="source" value="{{ old('source', $post->source) }}" placeholder="Inside Source of Post">
                                     
                                         <!-- error message untuk source -->
                                         @error('source')
@@ -78,7 +79,7 @@
                                         @enderror
                                     </div>
 
-                            <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
+                            <button type="submit" class="btn btn-md btn-primary me-3">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
 
                         </form> 

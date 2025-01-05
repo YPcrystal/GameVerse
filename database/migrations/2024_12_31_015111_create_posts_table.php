@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('reporter');
-            $table->string('resource');
+            $table->string('source');
             $table->timestamps();
         });
     }

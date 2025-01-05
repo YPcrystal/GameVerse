@@ -2,185 +2,136 @@
 
 namespace App\Http\Controllers;
 
-//import model product
-use App\Models\Post; 
-
-//import return type View
+use App\Models\Post;
 use Illuminate\View\View;
-
-//import return type redirectResponse
-use Illuminate\Http\Request;
-
-//import Http Request
 use Illuminate\Http\RedirectResponse;
-
-//import Facades Storage
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     /**
-     * index
-     *
-     * @return void
+     * Display a listing of the resource.
      */
     public function index() : View
     {
         //get all posts
-        $posts = Post::latest()->paginate(10);
+        $posts = Post::paginate(10);
 
         //render view with posts
         return view('posts.index', compact('posts'));
     }
 
     /**
-     * create
-     *
-     * @return View
+     * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create() : View
     {
         return view('posts.create');
     }
 
     /**
-     * store
-     *
-     * @param  mixed $request
-     * @return RedirectResponse
+     * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StorePostRequest $request): RedirectResponse
     {
-        //validate form
-        $request->validate([
-            'image'         => 'image|mimes:jpeg,jpg,png|max:2048',
-            'title'         => 'required|min:5',
-            'content'       => 'required|min:10',
-            'reporter'      => 'required',
-            'resource'      => 'required'
-        ]);
+        
 
-        //upload image
+        //uploa1d image
         $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
+        $image->storeAs('public/post', $image->hashName());
 
         //create post
         Post::create([
-            'image'         => $image->hashName(),
-            'title'         => $request->title,
-            'content'       => $request->content,
-            'reporter'      => $request->reporter,
-            'resource'      => $request->resource
+            'image'    => $image->hashName(),
+            'title'    => $request->title,
+            'content'  => $request->content,
+            'reporter' => $request->reporter,
+            'source'   => $request->source
         ]);
 
         //redirect to index
         return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
+
     
     /**
-     * show
-     *
-     * @param  mixed $id
-     * @return View
+     * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(string $id) : View
     {
-        //get post by ID
-        $post = Post::findOrFail($id);
+        //get post by id
+        $post = Post::findorFail($id);
 
         //render view with post
         return view('posts.show', compact('post'));
     }
-    
-    /**
-     * edit
-     *
-     * @param  mixed $id
-     * @return View
-     */
-    public function edit(string $id): View
-    {
-        //get post by ID
-        $post = Post::findOrFail($id);
 
-        //render view with post
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id) : View
+    {
+        $post = Post::findorFail($id);
+
         return view('posts.edit', compact('post'));
     }
-        
+
     /**
-     * update
-     *
-     * @param  mixed $request
-     * @param  mixed $id
-     * @return RedirectResponse
+     * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(UpdatePostRequest $request, $id)
     {
-        //validate form
-        $request->validate([
-            'image'         => 'image|mimes:jpeg,jpg,png|max:2048',
-            'title'         => 'required|min:5',
-            'content'       => 'required|min:10',
-            'reporter'      => 'required',
-            'resource'      => 'required'
-        ]);
+        //get post id
+        $post = Post::findorFail($id);
 
-        //get post by ID
-        $post = Post::findOrFail($id);
-
-        //check if image is uploaded
+        //check if image upload or not
         if ($request->hasFile('image')) {
 
             //upload new image
             $image = $request->file('image');
-            $image->storeAs('public/posts', $image->hashName());
+            $image->storeAs('public/post', $image->hashName());
 
             //delete old image
-            Storage::delete('public/posts/'.$post->image);
+            Storage::delete('public/post'.$post->image);
 
             //update post with new image
-            $product->update([
+            $post->update([
                 'image'         => $image->hashName(),
                 'title'         => $request->title,
                 'content'       => $request->content,
                 'reporter'      => $request->reporter,
-                'resource'      => $request->resource
+                'source'        => $request->source
             ]);
-
         } else {
-
             //update post without image
             $post->update([
-                'image'         => $request->image,
                 'title'         => $request->title,
                 'content'       => $request->content,
                 'reporter'      => $request->reporter,
-                'resource'      => $request->resource
+                'source'        => $request->source
             ]);
         }
-
         //redirect to index
         return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Diubah!']);
+        
     }
-    
+
     /**
-     * destroy
-     *
-     * @param  mixed $id
-     * @return RedirectResponse
+     * Remove the specified resource from storage.
      */
-    public function destroy($id): RedirectResponse
+    public function destroy($id) : RedirectResponse
     {
-        //get post by ID
-        $post = Post::findOrFail($id);
+        $post = Post::findorFail($id);
 
         //delete image
-        Storage::delete('public/posts/'. $post->image);
+        Storage::delete('public/post/'. $post->image);
 
         //delete post
         $post->delete();
 
-        //redirect to index
+        //delete to index
         return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
