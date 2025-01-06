@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('nilais', function (Blueprint $table) {
             $table->id();
-            $table->string('basdon');
-            $table->string('basing');
+            $table->string('astronomi');
+            $table->string('fisika');
             $table->string('matematika');
             $table->string('ipa');
             $table->string('ips');

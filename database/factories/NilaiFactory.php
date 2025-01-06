@@ -18,8 +18,8 @@ class NilaiFactory extends Factory
     {
         return [
             
-            'basdon'         => $this->faker->randomFloat(2, 0, 100),
-            'basing'         => $this->faker->randomFloat(2, 0, 100),
+            'astronomi'      => $this->faker->randomFloat(2, 0, 100),
+            'fisika'         => $this->faker->randomFloat(2, 0, 100),
             'matematika'     => $this->faker->randomFloat(2, 0, 100),
             'ipa'            => $this->faker->randomFloat(2, 0, 100),
             'ips'            => $this->faker->randomFloat(2, 0, 100),

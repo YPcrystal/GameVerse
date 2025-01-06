@@ -18,8 +18,8 @@ class Nilai extends Model
      */
 
     protected $fillable = [
-        'basdon',
-        'basing',
+        'astronomi',
+        'fisika',
         'matematika',
         'ipa',
         'ips',

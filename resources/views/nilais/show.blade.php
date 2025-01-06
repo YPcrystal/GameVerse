@@ -14,8 +14,8 @@
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <p>Bahasa Indonesia : {{ $nilai->basdon }}</p>
-                        <p>Bahasa Inggris : {{ $nilai->basing }}</p>
+                        <p>Astronomi : {{ $nilai->astronomi }}</p>
+                        <p>fisika : {{ $nilai->fisika }}</p>
                         <p>Matematika : {{ $nilai->matematika }}</p>
                         <p>IPA : {{ $nilai->ipa }}</p>
                         <p>IPS : {{ $nilai->ips }}</p>

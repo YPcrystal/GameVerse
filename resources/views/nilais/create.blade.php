@@ -19,11 +19,11 @@
                             @csrf
 
                             <div class="form-group mb-3">
-                                <label class="font-weight-bold">Bahasa Indonesia</label>
-                                <input type="number" class="form-control @error('basdon') is-invalid @enderror" name="basdon" value="{{ old('basdon') }}" placeholder="Masukkan Nilai">
+                                <label class="font-weight-bold">Astronomi</label>
+                                <input type="number" class="form-control @error('astronomi') is-invalid @enderror" name="astronomi" value="{{ old('astronomi') }}" placeholder="Masukkan Nilai">
                             
-                                <!-- error message untuk basdon -->
-                                @error('basdon')
+                                <!-- error message untuk astronomi -->
+                                @error('astronomi')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -31,11 +31,11 @@
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label class="font-weight-bold">Bahasa Inggris</label>
-                                <input type="number" class="form-control @error('basing') is-invalid @enderror" name="basing" value="{{ old('basing') }}" placeholder="Masukkan Nilai">
+                                <label class="font-weight-bold">Fisika</label>
+                                <input type="number" class="form-control @error('fisika') is-invalid @enderror" name="fisika" value="{{ old('fisika') }}" placeholder="Masukkan Nilai">
                             
-                                <!-- error message untuk basing -->
-                                @error('basing')
+                                <!-- error message untuk fisika -->
+                                @error('fisika')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>

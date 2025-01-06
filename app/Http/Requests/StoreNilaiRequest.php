@@ -22,8 +22,8 @@ class StoreNilaiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'basdon'         => 'required|numeric',
-            'basing'         => 'required|numeric',
+            'astronomi'      => 'required|numeric',
+            'fisika'         => 'required|numeric',
             'matematika'     => 'required|numeric',
             'ipa'            => 'required|numeric',
             'ips'            => 'required|numeric',

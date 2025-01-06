@@ -36,8 +36,8 @@ class NilaiController extends Controller
     {
         //validate form
         $request->validate([
-            'basdon'         => 'required|numeric',
-            'basing'         => 'required|numeric',
+            'astronomi'      => 'required|numeric',
+            'fisika'         => 'required|numeric',
             'matematika'     => 'required|numeric',
             'ipa'            => 'required|numeric',
             'ips'            => 'required|numeric',
@@ -45,8 +45,8 @@ class NilaiController extends Controller
 
         //create nilai
         Nilai::create([
-            'basdon'         => $request->basdon,
-            'basing'         => $request->basing,
+            'astronomi'      => $request->astronomi,
+            'fisika'         => $request->fisika,
             'matematika'     => $request->matematika,
             'ipa'            => $request->ipa,
             'ips'            => $request->ips,
@@ -95,8 +95,8 @@ class NilaiController extends Controller
     {
         //validate form
         $request->validate([
-            'basdon'         => 'required|numeric',
-            'basing'         => 'required|numeric',
+            'astronomi'      => 'required|numeric',
+            'fisika'         => 'required|numeric',
             'matematika'     => 'required|numeric',
             'ipa'            => 'required|numeric',
             'ips'            => 'required|numeric',
@@ -117,8 +117,8 @@ class NilaiController extends Controller
 
             //update nilai with new image
             $nilai->update([
-                'basdon'         => $request->basdon,
-                'basing'         => $request->basing,
+                'astronomi'      => $request->astronomi,
+                'fisika'         => $request->fisika,
                 'matematika'     => $request->matematika,
                 'ipa'            => $request->ipa,
                 'ips'            => $request->ips,
@@ -128,8 +128,8 @@ class NilaiController extends Controller
 
             //update nilai without image
             $nilai->update([
-                'basdon'         => $request->basdon,
-                'basing'         => $request->basing,
+                'astronomi'      => $request->astronomi,
+                'fisika'         => $request->fisika,
                 'matematika'     => $request->matematika,
                 'ipa'            => $request->ipa,
                 'ips'            => $request->ips,

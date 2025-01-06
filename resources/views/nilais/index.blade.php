@@ -23,8 +23,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">Bahasa Indonesia</th>
-                                    <th scope="col">Bahasa Inggris</th>
+                                    <th scope="col">Astronomi</th>
+                                    <th scope="col">Fisika</th>
                                     <th scope="col">Matematika</th>
                                     <th scope="col">IPA</th>
                                     <th scope="col">IPS</th>
@@ -34,8 +34,8 @@
                             <tbody>
                                 @forelse ($nilais as $nilai)
                                     <tr>
-                                        <td>{{ $nilai->basdon }}</td>
-                                        <td>{{ $nilai->basing }}</td>
+                                        <td>{{ $nilai->astronomi }}</td>
+                                        <td>{{ $nilai->fisika }}</td>
                                         <td>{{ $nilai->matematika }}</td>
                                         <td>{{ $nilai->ipa }}</td>
                                         <td>{{ $nilai->ips }}</td>
