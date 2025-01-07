@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {

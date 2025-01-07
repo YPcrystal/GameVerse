@@ -47,7 +47,7 @@ class ReporterController extends Controller
         $photo = $request->file('photo');
         $photo->storeAs('public/reporters', $photo->hashName());
 
-        //create product
+        //create reporter
         Reporter::create([
             'name'         => $request->name,
             'email'        => $request->email,

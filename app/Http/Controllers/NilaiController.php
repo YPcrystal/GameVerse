@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Nilai;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Storage;
 
 class NilaiController extends Controller
@@ -151,7 +152,7 @@ class NilaiController extends Controller
         $nilai = Nilai::findOrFail($id);
 
         //delete image
-        Storage::delete('public/products/'. $product->image);
+        Storage::delete('public/nilais/'. $nilai->image);
 
         //delete nilai
         $nilai->delete();
