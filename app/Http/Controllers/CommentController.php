@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -60,7 +61,7 @@ class CommentController extends Controller
         Comment::create([
             "post_id" => $request->post_id,
             "content" => $request->content,
-            "author" => $request->author,
+            "user_id" => Auth::id(),
             // 'photo'        => $photo->hashName(),
             // 'name'         => $request->name,
             // 'email'        => $request->email,
