@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\View\View;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class CommentController extends Controller
      *
      * @return void
      */
-    public function index() : View
+    public function index() 
     {
         //get all comments
         $comments = Comment::paginate(10);

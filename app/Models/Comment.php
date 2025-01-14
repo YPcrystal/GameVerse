@@ -22,7 +22,6 @@ class Comment extends Model
         'name',
         'email',
         'phone',
-        'address',
         'review',
     ];
     // relasi ke post
