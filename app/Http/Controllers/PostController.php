@@ -37,7 +37,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request): RedirectResponse
     {
-        
+        // Pastikan pengguna sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('Please login to create a post.');
+    }
 
         //upload image
         $image = $request->file('image');
