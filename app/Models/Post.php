@@ -20,7 +20,18 @@ class Post extends Model
         'image',
         'title',
         'content',
-        'reporter',
+        'user_id',
         'source',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // relasi ke comment
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
