@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ Route::get('/', function () {
     Route::resource('/comments', \App\Http\Controllers\CommentController::class);
     Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
     Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
+    Route::resource('/reviews', \App\Http\Controllers\ReviewController::class);
     Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -23,7 +25,9 @@ Route::get('/', function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('products', ProductController::class);
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    
     
 });
 

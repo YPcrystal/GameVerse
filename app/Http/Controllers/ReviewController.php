@@ -24,10 +24,10 @@ class ReviewController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         Review::create([
-            // 'user_id' => Auth::id(),
+            
             'product_id' => $request->product_id,
-            'rating' => $request->rating,
-            'comment' => $request->comment
+            'content' => $request->content,
+            'user_id' => Auth::id()
         ]);
 
         return redirect()->route('products.show', $request->product_id)->with('success', 'Data berhasil disimpan');
