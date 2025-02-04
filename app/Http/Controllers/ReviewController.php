@@ -3,33 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    public function index() : View
+    public function store(Request $request, $gameId)
     {
-        $reviews = Review::all();
-        return view('reviews.index', compact('reviews'));
-    }
-
-    public function create() : View
-    {
-        return view('reviews.create');
-    }
-
-    public function store(Request $request) : RedirectResponse
-    {
-        Review::create([
-            
-            'product_id' => $request->product_id,
-            'content' => $request->content,
-            'user_id' => Auth::id()
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'comment' => 'required|string|max:255',
         ]);
 
-        return redirect()->route('products.show', $request->product_id)->with('success', 'Data berhasil disimpan');
+        $game = Game::findOrFail($gameId);
+        Review::create([
+            'user_id' => Auth::id(),
+            'game_id' => $gameId,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+        ]);
+        
+
+        return redirect()->route('games.show', $gameId)->with('success', 'Review submitted successfully!');
     }
 }

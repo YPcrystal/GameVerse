@@ -2,27 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\Hasfactory;
+use App\Models\Game;
+use App\Models\User;
 
 class Review extends Model
 {
     use HasFactory;
 
-    /**
-     * fillable
-     * 
-     * @var array
-     */
-    protected $fillable = [
-        'product_id',
-        'content',
-        'user_id'
-    ];
-    //relasi ke product
-    public function product()
+    protected $fillable = ['user_id', 'game_id', 'rating', 'comment'];
+
+    public function game()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Game::class);
     }
 
     public function user()

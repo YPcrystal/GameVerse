@@ -4,37 +4,32 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PharmacyController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-    Route::resource('/products', \App\Http\Controllers\ProductController::class);
-    Route::resource('/posts', \App\Http\Controllers\PostController::class);
-    Route::resource('/reporters', \App\Http\Controllers\ReporterController::class);
-    Route::resource('/comments', \App\Http\Controllers\CommentController::class);
-    Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
-    Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
-    Route::resource('/reviews', \App\Http\Controllers\ReviewController::class);
-    Route::get('/dashboard', function () {
+
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::resource('/products', ProductController::class);
+Route::resource('/posts', PostController::class);
+Route::resource('/reporters', \App\Http\Controllers\ReporterController::class);
+Route::resource('/comments', CommentController::class);
+Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
+Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
+Route::resource('/reviews', ReviewController::class);
+
+Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-<<<<<<< HEAD
-//route resource for products
-Route::resource('/products', \App\Http\Controllers\ProductController::class);
-Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
-=======
-    Route::resource('posts', PostController::class);
-    Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('products', ProductController::class);
-    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-    
-    
-});
-
-require __DIR__.'/auth.php';
->>>>>>> 3bf81dbd3daaabe3dc40fbc7f12d17af83584927
+Route::get('/', [GameController::class, 'index'])->name('home');
+Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
+Route::get('search', [GameController::class, 'search'])->name('games.search');
+Route::post('games/{gameId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //hapus table jika uda adaa
+        // Drop the table if it already exists
         Schema::dropIfExists('reviews');
 
+        // Create the reviews table
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
@@ -32,8 +33,6 @@ return new class extends Migration
     {
         Schema::table('reviews', function (Blueprint $table) {
             $table->dropForeign(['product_id']);
-            $table->dropColumn('product_id');
-            $table->dropForeign(['user_id']);
             $table->dropForeign(['user_id']);
         });
         Schema::dropIfExists('reviews');
