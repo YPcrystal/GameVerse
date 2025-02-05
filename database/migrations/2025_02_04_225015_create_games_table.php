@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up()
+    public function up(): void
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
@@ -20,7 +20,6 @@ public function up()
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

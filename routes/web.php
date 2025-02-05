@@ -24,12 +24,14 @@ Route::resource('/comments', CommentController::class);
 Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
 Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
 Route::resource('/reviews', ReviewController::class);
+Route::resource('games', GameController::class);
+Route::post('games/{gameId}/reviews', [GameController::class, 'storeReview'])->name('reviews.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [GameController::class, 'index'])->name('home');
-Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
-Route::get('search', [GameController::class, 'search'])->name('games.search');
-Route::post('games/{gameId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+// Route::get('/', [GameController::class, 'index'])->name('home');
+// Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
+// Route::get('search', [GameController::class, 'search'])->name('games.search');
+// Route::post('games/{gameId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');

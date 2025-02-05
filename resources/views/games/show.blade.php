@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Game - {{ $game->title }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Detail Game - YPcrystal</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <header class="bg-dark text-white py-3">
@@ -27,16 +27,11 @@
                 <p><strong>Deskripsi:</strong></p>
                 <p>{{ $game->description }}</p>
                 <h3>Reviews</h3>
-                @foreach ($game->reviews as $review)
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <strong>{{ $review->user->name }}:</strong>
-                            <p>Rating: {{ $review->rating }} / 5</p>
-                            <p>{{ $review->comment }}</p>
-                        </div>
-                    </div>
-                @endforeach
-
+                <ul>
+                    @foreach ($game->reviews as $review)
+                        <li>{{ $review->content }} - Rating: {{ $review->rating }}</li>
+                    @endforeach
+                </ul>
                 <h3>Submit a Review</h3>
                 <form action="{{ route('reviews.store', $game->id) }}" method="POST">
                     @csrf
@@ -59,6 +54,6 @@
     <footer class="bg-dark text-white text-center py-3">
         <p>© 2025 YPcrystal. All Rights Reserved.</p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

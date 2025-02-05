@@ -1,19 +1,64 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data Games - GamesTerkini.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background: lightgray">
 
-@section('content')
-<div class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    @foreach($games as $game)
-        <div class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 border border-gray-200">
-            <img src="{{ asset($game->image) }}" alt="{{ $game->title }}" class="w-full h-60 object-cover">
-            <div class="p-3">
-                <h2 class="text-lg font-bold text-gray-800">{{ $game->title }}</h2>
-                <p class="text-xs text-gray-600 mt-1 leading-tight">{{ Str::limit($game->description, 80) }}</p>
-                <div class="flex items-center justify-between mt-2 text-sm font-semibold">
-                    <span class="text-yellow-500 flex items-center">⭐ {{ $game->rating }}</span>
-                    <a href="{{ route('games.show', $game) }}" class="text-blue-500">Read more</a>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <h3 class="text-center my-4">Games Terbaru Hari Ini</h3>
+                    <h5 class="text-center"><a href="https://BeritaTerkini.com">www.BeritaTerkini.com</a></h5>
+                    <hr>
+                </div>
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body">
+                        <a href="{{ route('games.create') }}" class="btn btn-md btn-success mb-3">ADD GAME</a>
+                        @foreach ($games as $game)
+                        <div class="game-card">
+                        <img src="{{ asset('images/' . $game->image) }}" alt="{{ $game->title }}">
+                                <h3>{{ $game->title }}</h3>
+                                <p>{{ $game->genre }}</p>
+                                <a href="{{ route('games.show', $game->id) }}">View Details</a>
+                            </div>
+                        @endforeach
+                        {{ $games->links() }}
+                    </div>
                 </div>
             </div>
         </div>
-    @endforeach
-</div>
-@endsection
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        //message with sweetalert
+        @if(session('success'))
+            Swal.fire({
+                icon: "success",
+                title: "BERHASIL",
+                text: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @elseif(session('error'))
+            Swal.fire({
+                icon: "error",
+                title: "GAGAL!",
+                text: "{{ session('error') }}",
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @endif
+
+    </script>
+
+</body>
+</html>
