@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 <div>
                     <h3 class="text-center my-4">Games Terbaru Hari Ini</h3>
-                    <h5 class="text-center"><a href="https://BeritaTerkini.com">www.BeritaTerkini.com</a></h5>
+                    <h5 class="text-center"><a href="https://BeritaTerkini.com">www.OfflineGather.com</a></h5>
                     <hr>
                 </div>
                 <div class="card border-0 shadow-sm rounded">

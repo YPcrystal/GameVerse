@@ -26,6 +26,8 @@ Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
 Route::resource('/reviews', ReviewController::class);
 Route::resource('games', GameController::class);
 Route::post('games/{gameId}/reviews', [GameController::class, 'storeReview'])->name('reviews.store');
+Route::get('games/{gameId}/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+Route::post('games/{gameId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

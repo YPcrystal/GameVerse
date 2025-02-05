@@ -194,7 +194,6 @@
             <a href="/posts">News</a>
             <a href="/products">Products</a>
             <a href="/games">Games</a>
-            <a href="/reviews">Review</a>
             <a href="/login">Login</a>
             <a href="/register">Register</a>
             <a href="/logout" style="display: none;">Logout</a>

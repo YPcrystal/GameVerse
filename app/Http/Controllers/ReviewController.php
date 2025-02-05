@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Models\Game; 
+use App\Models\Game;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    /**
-     * Store a newly created review in storage.
-     */
+    public function create($gameId)
+    {
+        $game = Game::findOrFail($gameId);
+        return view('reviews.create', compact('game'));
+    }
+
     public function store(Request $request, $gameId)
     {
-        // Pastikan game dengan ID yang diberikan ada
-        $game = Game::findOrFail($gameId);
-
         $request->validate([
             'rating' => 'required|integer|between:1,5',
             'comment' => 'required|string|max:255',
