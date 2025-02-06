@@ -188,7 +188,7 @@
 </head>
 <body>
     <header>
-        <div class="logo">GameHub</div>
+        <div class="logo">OfflineGather</div>
         <nav>
             <a href="#home">Home</a>
             <a href="/posts">News</a>
@@ -213,7 +213,7 @@
 
     <section class="features" id="features">
         <div class="feature">
-            <img src="https://via.placeholder.com/100" alt="Feature 1">
+            <iframe src="https://assets.pinterest.com/ext/embed.html?id=717127940709972770" height="830" width="345" frameborder="0" scrolling="no" ></iframe>
             <h3>Immersive Reviews</h3>
             <p>Read detailed and engaging reviews from real players.</p>
         </div>
