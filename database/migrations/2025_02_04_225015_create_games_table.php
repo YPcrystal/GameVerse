@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('genre');
-            $table->text('description');
+            $table->string('judul');
             $table->string('platform');
+            $table->string('genre');
+            $table->date('tanggal_rilis');
+            $table->string('developer');
+            $table->string('publisher');
+            $table->text('deskripsi_singkat');
+            $table->string('gambar_cover');
+            $table->string('trailer');
             $table->timestamps();
         });
     }
