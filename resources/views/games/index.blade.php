@@ -1,64 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Games - GamesTerkini.com</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Daftar Game</title>
 </head>
-<body style="background: lightgray">
+<body>
+    <h1>Daftar Game</h1>
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div>
-                    <h3 class="text-center my-4">Games Terbaru Hari Ini</h3>
-                    <h5 class="text-center"><a href="https://BeritaTerkini.com">www.OfflineGather.com</a></h5>
-                    <hr>
-                </div>
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-body">
-                        <a href="{{ route('games.create') }}" class="btn btn-md btn-success mb-3">ADD GAME</a>
-                        @foreach ($games as $game)
-                        <div class="game-card">
-                        <img src="{{ asset('images/' . $game->image) }}" alt="{{ $game->title }}">
-                                <h3>{{ $game->title }}</h3>
-                                <p>{{ $game->genre }}</p>
-                                <a href="{{ route('games.show', $game->id) }}">View Details</a>
-                            </div>
-                        @endforeach
-                        {{ $games->links() }}
-                    </div>
-                </div>
-            </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
-    </div>
+    @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <a href="/games/create">Tambah Game Baru</a>
 
-    <script>
-        //message with sweetalert
-        @if(session('success'))
-            Swal.fire({
-                icon: "success",
-                title: "BERHASIL",
-                text: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 2000
-            });
-        @elseif(session('error'))
-            Swal.fire({
-                icon: "error",
-                title: "GAGAL!",
-                text: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 2000
-            });
-        @endif
-
-    </script>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Platform</th>
+                <th>Genre</th>
+                <th>Tanggal Rilis</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($games as $game)
+                <tr>
+                    <td>{{ $game->judul }}</td>
+                    <td>{{ $game->platform }}</td>
+                    <td>{{ $game->genre }}</td>
+                    <td>{{ $game->tanggal_rilis }}</td>
+                    <td>
+                        <a href="/games/{{ $game->id }}">Detail</a>
+                        <a href="/games/{{ $game->id }}/edit">Edit</a>
+                        <form action="/games/{{ $game->id }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>
+<form action="/games/search" method="GET">
+    <input type="text" name="keyword" placeholder="Cari game...">
+    <button type="submit">Cari</button>
+</form>
