@@ -112,4 +112,16 @@ class GameController extends Controller
         $game->delete(); // Menghapus data game dari database
         return redirect('/games')->with('success', 'Game berhasil dihapus!');
     }
+
+    public function search(Request $request)
+{
+    $keyword = $request->keyword;
+    $games = Game::where('judul', 'like', "%$keyword%")
+                  ->orWhere('platform', 'like', "%$keyword%")
+                  ->orWhere('genre', 'like', "%$keyword%")
+                  ->get();
+    
+    return view('games.index', compact('games'));
+}
+
 }

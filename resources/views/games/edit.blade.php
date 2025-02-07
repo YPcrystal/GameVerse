@@ -36,8 +36,8 @@
         <input type="hidden" name="folder" value="image/documents">
 
         <!-- link-->
-        <label for="trailer">Trailer (YouTube URL):</label>
-        <input type="url" name="trailer" id="trailer" value="{{ $game->trailer }}" pattern="https://.*\.youtube\.com/.*" required><br><br>
+        <label for="trailer">Trailer (URL YouTube):</label>
+        <input type="url" name="trailer" id="trailer" pattern="https://.*" placeholder="https://www.youtube.com/watch?v=example" required><br><br>
 
         <button type="submit">Simpan</button>
     </form>

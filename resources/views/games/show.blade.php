@@ -14,11 +14,12 @@
     <p>Publisher: {{ $game->publisher }}</p>
     <p>Deskripsi Singkat: {{ $game->deskripsi_singkat }}</p>
     <img src="{{ $game->gambar_cover }}" alt="Gambar Cover">
-    <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/QzOUTLOjWYo" 
-        frameborder="0" 
-        allowfullscreen>
-</iframe>
+    <br>
+        <iframe width="560" height="315" 
+            src="{{ str_replace('watch?v=', 'embed/', $game->trailer) }}" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
 
 
     <a href="/games">Kembali ke Daftar Game</a>
