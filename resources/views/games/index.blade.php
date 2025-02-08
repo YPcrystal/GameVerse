@@ -14,6 +14,35 @@
 
     <a href="/games/create">Tambah Game Baru</a>
 
+    <!-- search and filter -->
+    <div class="row">
+        <form action="{{ route('games.search') }}" method="GET">
+            <div class="input-group mb-3">
+                <input type="text" name="keyword" class="form-control" placeholder="Search games...">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <form action="/games" method="GET">
+        <select name="platform">
+            <option value="">Semua Platform</option>
+            <option value="PC">PC</option>
+            <option value="PS5">PS5</option>
+            <option value="Xbox Series X">Xbox Series X</option>
+            <option value="Switch">Switch</option>
+        </select>
+
+        <select name="genre">
+            <option value="">Semua Genre</option>
+            <option value="Action">Action</option>
+            <option value="RPG">RPG</option>
+            <option value="Strategy">Strategy</option>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
     @if ($games->count() > 0)
         <table>
             <thead>
@@ -49,9 +78,5 @@
         <p>Tidak ada game yang ditemukan.</p>
     @endif
 
-    <form action="/games/search" method="GET">
-        <input type="text" name="keyword" placeholder="Cari game...">
-        <button type="submit">Cari</button>
-    </form>
 </body>
 </html>

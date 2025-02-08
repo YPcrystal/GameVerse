@@ -26,6 +26,7 @@ Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
 Route::resource('/reviews', ReviewController::class);
 Route::resource('games', GameController::class);
 
+Route::get('/games/search', [GameController::class, 'search'])->name('games.search');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

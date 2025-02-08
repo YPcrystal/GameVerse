@@ -7,11 +7,21 @@ use App\Models\Game; // Import model Game
 
 class GameController extends Controller
 {
-    public function index()
-    {
-        $games = Game::all(); // Mengambil semua data game dari database
-        return view('games.index', compact('games')); // Menampilkan data game di view 'games.index'
-    }
+    public function index(Request $request)
+{
+    $platform = $request->platform;
+    $genre = $request->genre;
+
+    $games = Game::when($platform, function ($query, $platform) {
+                    return $query->where('platform', $platform);
+                })
+                ->when($genre, function ($query, $genre) {
+                    return $query->where('genre', $genre);
+                })
+                ->get();
+
+    return view('games.index', compact('games'));
+}
 
     public function create()
     {
