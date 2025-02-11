@@ -2,81 +2,56 @@
 <html>
 <head>
     <title>Daftar Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Daftar Game</h1>
+    <div class="container mt-5">
+        <h1>Daftar Game</h1>
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <a href="/games/create">Tambah Game Baru</a>
-
-    <!-- search and filter -->
-    <div class="row">
-        <form action="{{ route('games.search') }}" method="GET">
-            <div class="input-group mb-3">
-                <input type="text" name="keyword" class="form-control" placeholder="Search games...">
-                <button class="btn btn-primary" type="submit">Search</button>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
-        </form>
+        @endif
+
+        <a href="/games/create" class="btn btn-primary mb-3">Tambah Game Baru</a>
+
+        @if ($games->count() > 0)
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Platform</th>
+                        <th>Genre</th>
+                        <th>Tanggal Rilis</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($games as $game)
+                        <tr>
+                            <td>{{ $game->judul }}</td>
+                            <td>{{ $game->platform }}</td>
+                            <td>{{ $game->genre }}</td>
+                            <td>{{ $game->tanggal_rilis }}</td>
+                            <td>
+                                <a href="/games/{{ $game->id }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="/games/{{ $game->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="/games/{{ $game->id }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>Tidak ada game yang ditemukan.</p>
+        @endif
     </div>
 
-    <form action="/games" method="GET">
-        <select name="platform">
-            <option value="">Semua Platform</option>
-            <option value="PC">PC</option>
-            <option value="PS5">PS5</option>
-            <option value="Xbox Series X">Xbox Series X</option>
-            <option value="Switch">Switch</option>
-        </select>
-
-        <select name="genre">
-            <option value="">Semua Genre</option>
-            <option value="Action">Action</option>
-            <option value="RPG">RPG</option>
-            <option value="Strategy">Strategy</option>
-        </select>
-
-        <button type="submit">Filter</button>
-    </form>
-
-    @if ($games->count() > 0)
-        <table>
-            <thead>
-                <tr>
-                    <th>Judul</th>
-                    <th>Platform</th>
-                    <th>Genre</th>
-                    <th>Tanggal Rilis</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($games as $game)
-                    <tr>
-                        <td>{{ $game->judul }}</td>
-                        <td>{{ $game->platform }}</td>
-                        <td>{{ $game->genre }}</td>
-                        <td>{{ $game->tanggal_rilis }}</td>
-                        <td>
-                            <a href="/games/{{ $game->id }}">Detail</a>
-                            <a href="/games/{{ $game->id }}/edit">Edit</a>
-                            <form action="/games/{{ $game->id }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p>Tidak ada game yang ditemukan.</p>
-    @endif
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
