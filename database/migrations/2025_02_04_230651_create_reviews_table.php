@@ -6,27 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        // Create the reviews table
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
-            $table->integer('rating');
-            $table->text('comment');
+            $table->unsignedBigInteger('game_id'); // Foreign key ke tabel games
+            $table->unsignedBigInteger('user_id'); // Foreign key ke tabel users (jika ada)
+            $table->integer('rating'); // Rating (misalnya, 1-5)
+            $table->text('review'); // Ulasan
             $table->timestamps();
+
+            // Foreign key constraints
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Jika ada user
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('reviews');
-    }
+    // ...
 };

@@ -4,44 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use App\Models\Game;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    /**
-     * create
-     *
-     * @param  mixed $gameId
-     * @return View
-     */
-    public function create($gameId): View
+    public function create(Game $game): View
     {
-        $game = Game::findOrFail($gameId);
         return view('reviews.create', compact('game'));
     }
 
-    /**
-     * store
-     *
-     * @param  Request $request
-     * @param  mixed $gameId
-     * @return RedirectResponse
-     */
-    public function store(Request $request, $gameId)
+    public function store(Request $request, Game $game): RedirectResponse
     {
         $request->validate([
             'rating' => 'required|integer|between:1,5',
-            'comment' => 'required|string|max:255',
+            'review' => 'required|string|max:255',
         ]);
 
         Review::create([
-            'user_id' => $request->user_id,
-            'game_id' => $gameId,
+            'game_id' => $game->id,
             'rating' => $request->rating,
-            'comment' => $request->comment,
+            'review' => $request->review,
         ]);
 
-        return redirect()->route('games.show', $gameId)->with('success', 'Review submitted successfully!');
+        return redirect()->route('games.show', $game->id)->with('success', 'Review submitted successfully!');
     }
 }
