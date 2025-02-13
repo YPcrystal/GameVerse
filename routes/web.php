@@ -8,6 +8,9 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\ReporterController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\NilaiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,14 +22,19 @@ Route::get('/home', function () {
 
 Route::resource('/products', ProductController::class);
 Route::resource('/posts', PostController::class);
-Route::resource('/reporters', \App\Http\Controllers\ReporterController::class);
+Route::resource('/reporters', ReporterController::class);
 Route::resource('/comments', CommentController::class);
-Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
-Route::resource('/nilais', \App\Http\Controllers\NilaiController::class);
-Route::resource('/reviews', ReviewController::class);
+Route::resource('/siswas', SiswaController::class);
+Route::resource('/nilais', NilaiController::class);
+
 Route::resource('games', GameController::class);
 
-Route::get('/games/search', [GameController::class, 'search'])->name('games.search');
+// Nested routes for reviews within games
+Route::prefix('games/{game}')->group(function () {
+    Route::get('reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <a href="/games/create" class="btn btn-primary mb-3">Tambah Game Baru</a>
+        <a href="{{ route('games.create') }}" class="btn btn-primary mb-3">Tambah Game Baru</a>
 
         @if ($games->count() > 0)
             <table class="table table-bordered">
@@ -35,9 +35,9 @@
                             <td>{{ $game->genre }}</td>
                             <td>{{ $game->tanggal_rilis }}</td>
                             <td>
-                                <a href="/games/{{ $game->id }}" class="btn btn-info btn-sm">Detail</a>
-                                <a href="/games/{{ $game->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="/games/{{ $game->id }}" method="POST" style="display:inline;">
+                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('games.destroy', $game->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
