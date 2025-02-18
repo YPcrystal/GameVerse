@@ -9,7 +9,7 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['game_id', 'rating', 'comment'];
+    protected $fillable = ['game_id', 'rating', 'review'];
 
     public function game()
     {
