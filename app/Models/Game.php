@@ -9,10 +9,10 @@ class Game extends Model
 {
     use HasFactory;
 
-    // Tambahkan semua kolom yang bisa diisi
-    protected $fillable = ['title', 'genre', 'description', 'platform'];
+    protected $fillable = [
+        'judul', 'platform', 'genre', 'tanggal_rilis', 'developer', 'publisher', 'deskripsi_singkat', 'gambar_cover', 'trailer'
+    ];
 
-    // Relasi dengan model Review
     public function reviews()
     {
         return $this->hasMany(Review::class);

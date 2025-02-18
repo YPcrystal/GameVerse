@@ -8,6 +8,7 @@ use App\Models\Review;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage; // Import Storage
 
 class GameController extends Controller
 {
@@ -35,35 +36,25 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required',
+            'judul' => 'required|unique:games,judul',
             'platform' => 'required',
             'genre' => 'required',
             'tanggal_rilis' => 'required|date',
             'developer' => 'required',
             'publisher' => 'required',
             'deskripsi_singkat' => 'required',
-            'gambar_cover' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer' => 'required|url',
         ]);
 
         $game = new Game;
-        $game->judul = $request->judul;
-        $game->platform = $request->platform;
-        $game->genre = $request->genre;
-        $game->tanggal_rilis = $request->tanggal_rilis;
-        $game->developer = $request->developer;
-        $game->publisher = $request->publisher;
-        $game->deskripsi_singkat = $request->deskripsi_singkat;
+        $game->fill($request->all());
 
         if ($request->hasFile('gambar_cover')) {
-            $image = $request->file('gambar_cover');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images/covers');
-            $image->move($destinationPath, $name);
-            $game->gambar_cover = '/images/covers/'.$name;
+            $path = $request->file('gambar_cover')->store('images/covers', 'public'); // Simpan di storage
+            $game->gambar_cover = '/storage/' . $path; // Gunakan path storage
         }
 
-        $game->trailer = $request->trailer;
         $game->save();
 
         return redirect('/games')->with('success', 'Game berhasil ditambahkan!');
@@ -84,41 +75,30 @@ class GameController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'judul' => 'required',
+            'judul' => 'required|unique:games,judul,' . $id, // Ignore ID saat update
             'platform' => 'required',
             'genre' => 'required',
             'tanggal_rilis' => 'required|date',
             'developer' => 'required',
             'publisher' => 'required',
             'deskripsi_singkat' => 'required',
-            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional
+            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer' => 'required|url',
         ]);
 
-        $game = Game::find($id);
-        $game->judul = $request->judul;
-        $game->platform = $request->platform;
-        $game->genre = $request->genre;
-        $game->tanggal_rilis = $request->tanggal_rilis;
-        $game->developer = $request->developer;
-        $game->publisher = $request->publisher;
-        $game->deskripsi_singkat = $request->deskripsi_singkat;
+        $game = Game::findOrFail($id);
+        $game->fill($request->all());
 
         if ($request->hasFile('gambar_cover')) {
-            $image = $request->file('gambar_cover');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images/covers');
-
-            // Hapus gambar lama (jika ada)
-            if ($game->gambar_cover && file_exists(public_path($game->gambar_cover))) {
-                unlink(public_path($game->gambar_cover));
+            // Hapus gambar lama jika ada
+            if ($game->gambar_cover) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $game->gambar_cover));
             }
 
-            $image->move($destinationPath, $name);
-            $game->gambar_cover = '/images/covers/'.$name;
+            $path = $request->file('gambar_cover')->store('images/covers', 'public');
+            $game->gambar_cover = '/storage/' . $path;
         }
 
-        $game->trailer = $request->trailer;
         $game->save();
 
         return redirect('/games')->with('success', 'Game berhasil diupdate!');

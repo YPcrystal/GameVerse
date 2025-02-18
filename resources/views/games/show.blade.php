@@ -15,7 +15,7 @@
         <p>Developer: {{ $game->developer }}</p>
         <p>Publisher: {{ $game->publisher }}</p>
         <p>Deskripsi Singkat: {{ $game->deskripsi_singkat }}</p>
-        <img src="{{ $game->gambar_cover }}" alt="Gambar Cover" class="img-fluid mb-3">
+        <img src="{{ asset($game->gambar_cover) }}" alt="Gambar Cover" class="img-fluid mb-3">
 
         @if (strpos($game->trailer, 'youtube.com') !== false || strpos($game->trailer, 'youtu.be') !== false)
             @php
@@ -36,7 +36,15 @@
         <h3>Reviews</h3>
         <ul>
             @foreach ($game->reviews as $review)
-                <li>{{ $review->review }} - Rating: {{ $review->rating }}</li>
+                <li>
+                    <p>Rating: {{ $review->rating }}</p>
+                    <p>Review: {{ $review->review }}</p>
+                    @if ($review->user)
+                        <p>User: {{ $review->user->name }}</p>
+                    @else
+                        <p>User: Tidak diketahui</p>
+                    @endif
+                </li>
             @endforeach
         </ul>
 
