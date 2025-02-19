@@ -60,4 +60,9 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+//     public function recommendations()
+// {
+//     $preferredGenres = explode(',', $this->preferred_genres); // Assuming preferred_genres is a comma-separated string
+//     return Game::whereIn('genre', $preferredGenres)->get();
+// }
 }

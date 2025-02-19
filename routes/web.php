@@ -29,12 +29,21 @@ Route::resource('/nilais', NilaiController::class);
 
 Route::resource('games', GameController::class);
 
-// Nested routes for reviews within games
-Route::prefix('games/{game}')->group(function () {
+// Nested routes for reviews within games with middleware group
+Route::prefix('games/{game}')->middleware(['auth'])->group(function () {
     Route::get('reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

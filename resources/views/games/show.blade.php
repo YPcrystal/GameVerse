@@ -44,11 +44,17 @@
                     @else
                         <p>User: Tidak diketahui</p>
                     @endif
+                    <form action="{{ route('reviews.destroy', [$game->id, $review->id]) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
                 </li>
             @endforeach
         </ul>
 
         <a href="{{ route('reviews.create', $game->id) }}" class="btn btn-primary">Tambah Review</a>
+        <a href="{{ route('games.index') }}" class="btn btn-secondary">Kembali ke Daftar Game</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

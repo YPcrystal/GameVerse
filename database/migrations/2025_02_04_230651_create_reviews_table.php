@@ -11,11 +11,13 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('game_id');
+            $table->unsignedBigInteger('user_id'); // Menambahkan kolom user_id
             $table->integer('rating');
             $table->text('review');
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Menambahkan foreign key untuk user_id
         });
     }
 

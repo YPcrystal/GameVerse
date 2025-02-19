@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -13,7 +14,7 @@ class ReviewController extends Controller
         $reviews = $game->reviews;
         return view('reviews.index', compact('game', 'reviews'));
     }
-
+    
     public function create(Game $game)
     {
         return view('reviews.create', compact('game'));
@@ -28,6 +29,7 @@ class ReviewController extends Controller
 
         Review::create([
             'game_id' => $game->id,
+            'user_id' => Auth::id(), // Pastikan user_id disimpan
             'rating' => $request->rating,
             'review' => $request->review,
         ]);
