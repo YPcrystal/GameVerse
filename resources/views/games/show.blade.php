@@ -3,6 +3,22 @@
 <head>
     <title>Detail Game</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .star-rating {
+            display: inline-block; /* Make it inline with other elements */
+        }
+
+        .star-rating i {
+            color: gold; /* Color of the stars */
+            margin-right: 5px; /* Space between stars */
+        }
+        .star-rating i.empty{
+            color: #ccc;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -37,18 +53,24 @@
         <ul>
             @foreach ($game->reviews as $review)
                 <li>
-                    <p>Rating: {{ $review->rating }}</p>
+                    <p>Rating: 
+                        <div class="star-rating">
+                            @for ($i = 0; $i < 5; $i++)
+                                @if ($i < $review->rating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="fas fa-star empty"></i>
+                                @endif
+                            @endfor
+                        </div>
+                    </p>
                     <p>Review: {{ $review->review }}</p>
                     @if ($review->user)
                         <p>User: {{ $review->user->name }}</p>
                     @else
                         <p>User: Tidak diketahui</p>
                     @endif
-                    <form action="{{ route('reviews.destroy', [$game->id, $review->id]) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                    </form>
+                    {{--  Hapus form delete review --}}
                 </li>
             @endforeach
         </ul>
