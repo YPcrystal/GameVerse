@@ -24,6 +24,7 @@
                         <th>Platform</th>
                         <th>Genre</th>
                         <th>Tanggal Rilis</th>
+                        <th>Nilai Rata-Rata</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -34,6 +35,7 @@
                             <td>{{ $game->platform }}</td>
                             <td>{{ $game->genre }}</td>
                             <td>{{ $game->tanggal_rilis }}</td>
+                            <td>{{ number_format($game->averageCriticScore(), 1) }}</td>
                             <td>
                                 <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm">Detail</a>
                                 <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -50,6 +52,31 @@
         @else
             <p>Tidak ada game yang ditemukan.</p>
         @endif
+
+        <h2>Rekomendasi</h2>
+        @if ($recommendations->count() > 0)
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Judul Game</th>
+                        <th>Kategori Rekomendasi</th>
+                        <th>Alasan Rekomendasi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($recommendations as $recommendation)
+                        <tr>
+                            <td>{{ $recommendation->game->judul }}</td>
+                            <td>{{ $recommendation->category }}</td>
+                            <td>{{ $recommendation->reason }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>Tidak ada rekomendasi yang ditemukan.</p>
+        @endif
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

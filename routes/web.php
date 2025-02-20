@@ -26,8 +26,9 @@ Route::resource('/reporters', ReporterController::class);
 Route::resource('/comments', CommentController::class);
 Route::resource('/siswas', SiswaController::class);
 Route::resource('/nilais', NilaiController::class);
-
+Route::resource('/recommendations', RecommendationController::class);
 Route::resource('games', GameController::class);
+Route::resource('games.reviews', ReviewController::class)->shallow();
 
 // Nested routes for reviews within games with middleware group
 Route::prefix('games/{game}')->middleware(['auth'])->group(function () {

@@ -17,4 +17,16 @@ class Game extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function recommendations() // Tambahkan method ini
+    {
+        return $this->hasMany(Recommendation::class);
+    }
+
+    public function averageCriticScore()
+    {
+        return $this->reviews()->avg('rating'); // Menggunakan 'rating'
+    }   
+
+    
 }

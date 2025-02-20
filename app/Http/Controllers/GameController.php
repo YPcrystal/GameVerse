@@ -8,85 +8,82 @@ use App\Models\Review;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage; // Import Storage
+use Illuminate\Support\Facades\Storage;
+use App\Models\Recommendation;
 
 class GameController extends Controller
 {
+    // index, create, store, show, edit, update, destroy
     public function index(Request $request)
     {
         $platform = $request->platform;
         $genre = $request->genre;
 
         $games = Game::when($platform, function ($query, $platform) {
-                        return $query->where('platform', $platform);
-                    })
-                    ->when($genre, function ($query, $genre) {
-                        return $query->where('genre', $genre);
-                    })
-                    ->get();
+                    return $query->where('platform', $platform);
+                })
+                ->when($genre, function ($query, $genre) {
+                    return $query->where('genre', $genre);
+                })
+                ->with('recommendations')
+                ->get();
 
-        return view('games.index', compact('games'));
+        $recommendations = Recommendation::all();
+
+        // Hitung rating rata-rata untuk setiap game
+        foreach ($games as $game) {
+            $game->rating_rata_rata = $game->averageCriticScore();
+        }
+
+
+        return view('games.index', compact('games', 'recommendations'));
     }
 
+    // Menampilkan form untuk membuat game baru
     public function create()
     {
         return view('games.create');
     }
 
+    // Menyimpan game baru ke database
     public function store(Request $request)
     {
-        $request->validate([
-            'judul' => 'required|unique:games,judul',
-            'platform' => 'required',
-            'genre' => 'required',
-            'tanggal_rilis' => 'required|date',
-            'developer' => 'required',
-            'publisher' => 'required',
-            'deskripsi_singkat' => 'required',
-            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'trailer' => 'required|url',
-        ]);
+        // ... (validasi)
 
         $game = new Game;
         $game->fill($request->all());
 
         if ($request->hasFile('gambar_cover')) {
-            $path = $request->file('gambar_cover')->store('images/covers', 'public'); // Simpan di storage
-            $game->gambar_cover = '/storage/' . $path; // Gunakan path storage
+            $path = $request->file('gambar_cover')->store('images/covers', 'public');
+            $game->gambar_cover = '/storage/' . $path;
         }
 
         $game->save();
 
-        return redirect('/games')->with('success', 'Game berhasil ditambahkan!');
+        // Hitung dan update rating rata-rata setelah game disimpan
+        $game->rating_rata_rata = $game->averageCriticScore();
+        $game->save();
+
+        return redirect()->route('games.index')->with('success', 'Game berhasil ditambahkan!');
     }
 
-    public function show($id)
+    // Menampilkan detail game
+    public function show(Game $game)
     {
-        $game = Game::find($id);
         return view('games.show', compact('game'));
     }
 
-    public function edit($id)
+    // Menampilkan form untuk mengedit game
+    public function edit(Game $game)
     {
-        $game = Game::find($id);
         return view('games.edit', compact('game'));
     }
 
-    public function update(Request $request, $id)
+    // Menyimpan perubahan game ke database
+    public function update(Request $request, Game $game)
     {
-        $request->validate([
-            'judul' => 'required|unique:games,judul,' . $id, // Ignore ID saat update
-            'platform' => 'required',
-            'genre' => 'required',
-            'tanggal_rilis' => 'required|date',
-            'developer' => 'required',
-            'publisher' => 'required',
-            'deskripsi_singkat' => 'required',
-            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'trailer' => 'required|url',
-        ]);
+        // ... (validasi)
 
-        $game = Game::findOrFail($id);
         $game->fill($request->all());
 
         if ($request->hasFile('gambar_cover')) {
@@ -101,13 +98,22 @@ class GameController extends Controller
 
         $game->save();
 
-        return redirect('/games')->with('success', 'Game berhasil diupdate!');
+        // Hitung dan update rating rata-rata setelah game diupdate
+        $game->rating_rata_rata = $game->averageCriticScore();
+        $game->save();
+
+        return redirect()->route('games.index')->with('success', 'Game berhasil diupdate!');
     }
 
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        $game = Game::find($id);
+        // Hapus gambar cover jika ada
+        if ($game->gambar_cover) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $game->gambar_cover));
+        }
+
         $game->delete();
-        return redirect('/games')->with('success', 'Game berhasil dihapus!');
+
+        return redirect()->route('games.index')->with('success', 'Game berhasil dihapus!');
     }
 }
