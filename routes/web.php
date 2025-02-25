@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RecommendationController; // Tambahkan ini
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ReporterController;
@@ -28,7 +29,6 @@ Route::resource('/siswas', SiswaController::class);
 Route::resource('/nilais', NilaiController::class);
 Route::resource('/recommendations', RecommendationController::class);
 Route::resource('games', GameController::class);
-Route::resource('games.reviews', ReviewController::class)->shallow();
 Route::get('games/search', [GameController::class, 'search'])->name('games.search');
 
 // Nested routes for reviews within games with middleware group

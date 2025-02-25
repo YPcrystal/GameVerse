@@ -7,17 +7,16 @@
 
     <style>
         .star-rating {
-            display: inline-block; /* Make it inline with other elements */
+            display: inline-block;
         }
 
         .star-rating i {
-            color: gold; /* Color of the stars */
-            margin-right: 5px; /* Space between stars */
+            color: gold;
+            margin-right: 5px;
         }
         .star-rating i.empty{
             color: #ccc;
         }
-
     </style>
 </head>
 <body>
@@ -35,13 +34,11 @@
 
         @if (strpos($game->trailer, 'youtube.com') !== false || strpos($game->trailer, 'youtu.be') !== false)
             @php
-                // Convert YouTube URL to embed URL
                 if (strpos($game->trailer, 'watch?v=') !== false) {
                     $trailerUrl = str_replace('watch?v=', 'embed/', $game->trailer);
                 } elseif (strpos($game->trailer, 'youtu.be') !== false) {
                     $trailerUrl = str_replace('youtu.be/', 'www.youtube.com/embed/', $game->trailer);
                 }
-                // Remove any additional parameters like &t=5s
                 $trailerUrl = strtok($trailerUrl, '&');
             @endphp
             <iframe width="560" height="315" src="{{ $trailerUrl }}" frameborder="0" allowfullscreen></iframe>
@@ -53,7 +50,7 @@
         <ul>
             @foreach ($game->reviews as $review)
                 <li>
-                    <p>Rating: 
+                    <p>Rating:
                         <div class="star-rating">
                             @for ($i = 0; $i < 5; $i++)
                                 @if ($i < $review->rating)
@@ -70,7 +67,7 @@
                     @else
                         <p>User: Tidak diketahui</p>
                     @endif
-                    {{--  Hapus form delete review --}}
+                    {{-- Hapus form delete review --}}
                 </li>
             @endforeach
         </ul>

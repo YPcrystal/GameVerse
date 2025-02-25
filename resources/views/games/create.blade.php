@@ -6,7 +6,17 @@
 <body>
     <h1>Tambah Game Baru</h1>
 
-    <form action="/games" method="POST" enctype="multipart/form-data">
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('games.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="judul">Judul:</label>
         <input type="text" name="judul" id="judul" required><br><br>
@@ -29,12 +39,9 @@
         <label for="deskripsi_singkat">Deskripsi Singkat:</label><br>
         <textarea name="deskripsi_singkat" id="deskripsi_singkat" required></textarea><br><br>
 
-        <!-- didapatkan dari file sendiri -->
         <label for="gambar_cover">Gambar Cover:</label>
         <input type="file" name="gambar_cover" id="gambar_cover"><br><br>
-        <input type="hidden" name="folder" value="image/documents">
 
-        <!-- didapatkan dari link youtube -->
         <label for="trailer">Trailer (URL YouTube):</label>
         <input type="url" name="trailer" id="trailer" pattern="https://.*" placeholder="https://www.youtube.com/watch?v=example" required><br><br>
 
