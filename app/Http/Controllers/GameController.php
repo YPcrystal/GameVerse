@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Game;
-use App\Models\Review;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Recommendation;
 
 class GameController extends Controller
 {
-    // index, create, store, show, edit, update, destroy
     public function index(Request $request)
     {
         $platform = $request->platform;
@@ -25,30 +19,35 @@ class GameController extends Controller
                 ->when($genre, function ($query, $genre) {
                     return $query->where('genre', $genre);
                 })
-                ->with('recommendations')
+                ->with('recommendations', 'reviews') // Eager load recommendations dan reviews
                 ->get();
 
-        $recommendations = Recommendation::all();
-
-        // Hitung rating rata-rata untuk setiap game
-        foreach ($games as $game) {
+        // Hitung rating rata-rata untuk setiap game (lebih efisien)
+        $games->each(function ($game) {
             $game->rating_rata_rata = $game->averageCriticScore();
-        }
+        });
 
-
-        return view('games.index', compact('games', 'recommendations'));
+        return view('games.index', compact('games')); // Tidak perlu mengirim $recommendations jika sudah di eager load
     }
 
-    // Menampilkan form untuk membuat game baru
     public function create()
     {
         return view('games.create');
     }
 
-    // Menyimpan game baru ke database
     public function store(Request $request)
     {
-        // ... (validasi)
+        $request->validate([
+            'judul' => 'required|unique:games,judul',
+            'platform' => 'required',
+            'genre' => 'required',
+            'tanggal_rilis' => 'required|date',
+            'developer' => 'required',
+            'publisher' => 'required',
+            'deskripsi_singkat' => 'required',
+            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:min_width=100,min_height=100',
+            'trailer' => 'required|url',
+        ]);
 
         $game = new Game;
         $game->fill($request->all());
@@ -60,29 +59,32 @@ class GameController extends Controller
 
         $game->save();
 
-        // Hitung dan update rating rata-rata setelah game disimpan
-        $game->rating_rata_rata = $game->averageCriticScore();
-        $game->save();
-
         return redirect()->route('games.index')->with('success', 'Game berhasil ditambahkan!');
     }
 
-    // Menampilkan detail game
     public function show(Game $game)
     {
         return view('games.show', compact('game'));
     }
 
-    // Menampilkan form untuk mengedit game
     public function edit(Game $game)
     {
         return view('games.edit', compact('game'));
     }
 
-    // Menyimpan perubahan game ke database
     public function update(Request $request, Game $game)
     {
-        // ... (validasi)
+        $request->validate([
+            'judul' => 'required|unique:games,judul,' . $game->id,
+            'platform' => 'required',
+            'genre' => 'required',
+            'tanggal_rilis' => 'required|date',
+            'developer' => 'required',
+            'publisher' => 'required',
+            'deskripsi_singkat' => 'required',
+            'gambar_cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:min_width=100,min_height=100',
+            'trailer' => 'required|url',
+        ]);
 
         $game->fill($request->all());
 
@@ -98,16 +100,12 @@ class GameController extends Controller
 
         $game->save();
 
-        // Hitung dan update rating rata-rata setelah game diupdate
-        $game->rating_rata_rata = $game->averageCriticScore();
-        $game->save();
 
         return redirect()->route('games.index')->with('success', 'Game berhasil diupdate!');
     }
 
     public function destroy(Game $game)
     {
-        // Hapus gambar cover jika ada
         if ($game->gambar_cover) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $game->gambar_cover));
         }

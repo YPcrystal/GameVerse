@@ -35,7 +35,7 @@
                             <td>{{ $game->platform }}</td>
                             <td>{{ $game->genre }}</td>
                             <td>{{ $game->tanggal_rilis }}</td>
-                            <td>{{ number_format($game->averageCriticScore(), 1) }}</td>
+                            <td>{{ number_format($game->rating_rata_rata, 1) }}</td> {{-- Gunakan $game->rating_rata_rata --}}
                             <td>
                                 <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm">Detail</a>
                                 <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -54,25 +54,28 @@
         @endif
 
         <h2>Rekomendasi</h2>
-        @if ($recommendations->count() > 0)
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Judul Game</th>
-                        <th>Kategori Rekomendasi</th>
-                        <th>Alasan Rekomendasi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($recommendations as $recommendation)
-                        <tr>
-                            <td>{{ $recommendation->game->judul }}</td>
-                            <td>{{ $recommendation->category }}</td>
-                            <td>{{ $recommendation->reason }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        @if ($games->isNotEmpty())  {{-- Periksa apakah ada game --}}
+            @foreach ($games as $game) {{-- Loop melalui games untuk mengambil rekomendasi --}}
+                @if ($game->recommendations->isNotEmpty()) {{-- Periksa apakah ada rekomendasi untuk game ini --}}
+                    <h3>Rekomendasi untuk {{ $game->judul }}</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Kategori Rekomendasi</th>
+                                <th>Alasan Rekomendasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($game->recommendations as $recommendation)
+                                <tr>
+                                    <td>{{ $recommendation->category->nama_kategori ?? $recommendation->category }}</td> {{-- Gunakan relasi category dan nama_kategori --}}
+                                    <td>{{ $recommendation->reason }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            @endforeach
         @else
             <p>Tidak ada rekomendasi yang ditemukan.</p>
         @endif

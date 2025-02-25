@@ -11,12 +11,17 @@ class Recommendation extends Model
 
     protected $fillable = [
         'game_id',
-        'category',
+        'category_id', // Jika Anda menggunakan foreign key, ganti 'category' dengan 'category_id'
         'reason',
     ];
 
     public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function category() // Tambahkan method ini
+    {
+        return $this->belongsTo(RecommendationCategory::class);
     }
 }
