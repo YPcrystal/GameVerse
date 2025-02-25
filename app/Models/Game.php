@@ -10,7 +10,7 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = [
-        'judul', 'platform', 'genre', 'tanggal_rilis', 'developer', 'publisher', 'deskripsi_singkat', 'gambar_cover', 'trailer'
+        'judul', 'platform', 'genre', 'tanggal_rilis', 'developer', 'publisher', 'deskripsi_singkat', 'gambar_cover', 'trailer', 'rating_rata_rata'
     ];
 
     public function reviews()
@@ -18,15 +18,13 @@ class Game extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function recommendations() // Tambahkan method ini
+    public function recommendations()
     {
         return $this->hasMany(Recommendation::class);
     }
 
     public function averageCriticScore()
     {
-        return $this->reviews()->avg('rating'); // Menggunakan 'rating'
-    }   
-
-    
+        return $this->reviews()->avg('rating');
+    }
 }

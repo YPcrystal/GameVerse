@@ -15,7 +15,7 @@ class RecommendationSeeder extends Seeder
     {
         Recommendation::create([
             'game_id' => 1, // ID game Mobile Legends
-            'category' => 'Game Terpopuler',
+            'category_id' => 1, // ID kategori "Game Terpopuler" (pastikan kategori ini ada di tabel recommendation_categories)
             'reason' => 'Game MOBA yang paling banyak dimainkan di Indonesia.',
         ]);
 

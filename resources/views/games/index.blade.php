@@ -8,6 +8,16 @@
     <div class="container mt-5">
         <h1>Daftar Game</h1>
 
+        <!-- Search and Filter -->
+        <div class="row mb-3">
+            <form action="{{ route('games.search') }}" method="GET" class="col-md-6">
+                <div class="input-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search games...">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -35,7 +45,7 @@
                             <td>{{ $game->platform }}</td>
                             <td>{{ $game->genre }}</td>
                             <td>{{ $game->tanggal_rilis }}</td>
-                            <td>{{ number_format($game->rating_rata_rata, 1) }}</td> {{-- Gunakan $game->rating_rata_rata --}}
+                            <td>{{ number_format($game->rating_rata_rata, 1) }}</td>
                             <td>
                                 <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm">Detail</a>
                                 <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -54,9 +64,9 @@
         @endif
 
         <h2>Rekomendasi</h2>
-        @if ($games->isNotEmpty())  {{-- Periksa apakah ada game --}}
-            @foreach ($games as $game) {{-- Loop melalui games untuk mengambil rekomendasi --}}
-                @if ($game->recommendations->isNotEmpty()) {{-- Periksa apakah ada rekomendasi untuk game ini --}}
+        @if ($games->isNotEmpty())
+            @foreach ($games as $game)
+                @if ($game->recommendations->isNotEmpty())
                     <h3>Rekomendasi untuk {{ $game->judul }}</h3>
                     <table class="table table-bordered">
                         <thead>
@@ -68,7 +78,7 @@
                         <tbody>
                             @foreach ($game->recommendations as $recommendation)
                                 <tr>
-                                    <td>{{ $recommendation->category->nama_kategori ?? $recommendation->category }}</td> {{-- Gunakan relasi category dan nama_kategori --}}
+                                    <td>{{ $recommendation->category->nama_kategori ?? $recommendation->category }}</td>
                                     <td>{{ $recommendation->reason }}</td>
                                 </tr>
                             @endforeach
@@ -79,9 +89,10 @@
         @else
             <p>Tidak ada rekomendasi yang ditemukan.</p>
         @endif
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+ 
+    <?php

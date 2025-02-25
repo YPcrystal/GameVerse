@@ -19,15 +19,14 @@ class GameController extends Controller
                 ->when($genre, function ($query, $genre) {
                     return $query->where('genre', $genre);
                 })
-                ->with('recommendations', 'reviews') // Eager load recommendations dan reviews
+                ->with('recommendations', 'reviews')
                 ->get();
 
-        // Hitung rating rata-rata untuk setiap game (lebih efisien)
         $games->each(function ($game) {
             $game->rating_rata_rata = $game->averageCriticScore();
         });
 
-        return view('games.index', compact('games')); // Tidak perlu mengirim $recommendations jika sudah di eager load
+        return view('games.index', compact('games'));
     }
 
     public function create()
@@ -49,15 +48,13 @@ class GameController extends Controller
             'trailer' => 'required|url',
         ]);
 
-        $game = new Game;
-        $game->fill($request->all());
+        $game = Game::create($request->all());
 
         if ($request->hasFile('gambar_cover')) {
             $path = $request->file('gambar_cover')->store('images/covers', 'public');
             $game->gambar_cover = '/storage/' . $path;
+            $game->save();
         }
-
-        $game->save();
 
         return redirect()->route('games.index')->with('success', 'Game berhasil ditambahkan!');
     }
@@ -89,7 +86,6 @@ class GameController extends Controller
         $game->fill($request->all());
 
         if ($request->hasFile('gambar_cover')) {
-            // Hapus gambar lama jika ada
             if ($game->gambar_cover) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $game->gambar_cover));
             }
@@ -100,8 +96,18 @@ class GameController extends Controller
 
         $game->save();
 
-
         return redirect()->route('games.index')->with('success', 'Game berhasil diupdate!');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $games = Game::where('judul', 'LIKE', "%$keyword%")
+            ->orWhere('platform', 'LIKE', "%$keyword%")
+            ->orWhere('genre', 'LIKE', "%$keyword%")
+            ->get();
+
+        return view('games.index', compact('games'));
     }
 
     public function destroy(Game $game)

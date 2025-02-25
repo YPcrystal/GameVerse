@@ -29,6 +29,7 @@ Route::resource('/nilais', NilaiController::class);
 Route::resource('/recommendations', RecommendationController::class);
 Route::resource('games', GameController::class);
 Route::resource('games.reviews', ReviewController::class)->shallow();
+Route::get('games/search', [GameController::class, 'search'])->name('games.search');
 
 // Nested routes for reviews within games with middleware group
 Route::prefix('games/{game}')->middleware(['auth'])->group(function () {

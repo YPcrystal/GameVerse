@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('developer', 255);
             $table->string('publisher', 255);
             $table->text('deskripsi_singkat');
-            $table->string('gambar_cover', 255)->nullable(); // Gambar bisa null
-            $table->string('trailer', 255)->nullable(); // Trailer bisa null
+            $table->string('gambar_cover', 255)->nullable();
+            $table->string('trailer', 255)->nullable();
+            $table->decimal('rating_rata_rata', 3, 2)->nullable(); // Tambahkan kolom rating_rata_rata
             $table->timestamps();
         });
     }
