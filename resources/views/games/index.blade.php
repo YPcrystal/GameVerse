@@ -8,7 +8,6 @@
     <div class="container mt-5">
         <h1>Daftar Game</h1>
 
-        <!-- Search and Filter -->
         <div class="row mb-3">
             <form action="{{ route('games.search') }}" method="GET" class="col-md-6">
                 <div class="input-group">
@@ -64,35 +63,29 @@
         @endif
 
         <h2>Rekomendasi</h2>
-        @if ($games->isNotEmpty())
-            @foreach ($games as $game)
-                @if ($game->recommendations->isNotEmpty())
-                    <h3>Rekomendasi untuk {{ $game->judul }}</h3>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Kategori Rekomendasi</th>
-                                <th>Alasan Rekomendasi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($game->recommendations as $recommendation)
-                                <tr>
-                                    <td>{{ $recommendation->category->nama_kategori ?? $recommendation->category }}</td>
-                                    <td>{{ $recommendation->reason }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-            @endforeach
-        @else
-            <p>Tidak ada rekomendasi yang ditemukan.</p>
-        @endif
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Kategori</th>
+                    <th>Nama Game</th>
+                    <th>Alasan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Game dengan rating tertinggi</td>
+                    <td>{{ $recommendations['highestRatedGame']->judul ?? '-' }}</td>
+                    <td>Game dengan rating rata-rata tertinggi.</td>
+                </tr>
+                <tr>
+                    <td>Game terbaik</td>
+                    <td>{{ $recommendations['bestGame']->judul ?? '-' }}</td>
+                    <td>Game dengan kombinasi rating dan jumlah review terbaik.</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
- 
-    <?php
