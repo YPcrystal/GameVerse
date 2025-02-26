@@ -15,7 +15,34 @@
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
-            <div class="col-md-6">
+            
+        <!-- Menambahkan Sort -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <form action="{{ route('games.index') }}" method="GET">
+                    <div class="form-row">
+                        <div class="col">
+                            <select name="sort_by" class="form-control">
+                                <option value="rating_rata_rata">Rating</option>
+                                <option value="tanggal_rilis">Release Date</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="sort_order" class="form-control">
+                                <option value="desc">Descending</option>
+                                <option value="asc">Ascending</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-info">Sort</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- menambahkan filter -->
+        <div class="col-md-6">
                 <form action="{{ route('games.index') }}" method="GET">
                     <div class="form-row">
                         <div class="col">
@@ -36,30 +63,6 @@
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-secondary">Filter</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <form action="{{ route('games.index') }}" method="GET">
-                    <div class="form-row">
-                        <div class="col">
-                            <select name="sort_by" class="form-control">
-                                <option value="rating_rata_rata">Rating</option>
-                                <option value="tanggal_rilis">Release Date</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <select name="sort_order" class="form-control">
-                                <option value="desc">Descending</option>
-                                <option value="asc">Ascending</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-info">Sort</button>
                         </div>
                     </div>
                 </form>
