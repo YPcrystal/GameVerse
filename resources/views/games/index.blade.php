@@ -15,6 +15,55 @@
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
+            <div class="col-md-6">
+                <form action="{{ route('games.index') }}" method="GET">
+                    <div class="form-row">
+                        <div class="col">
+                            <select name="platform" class="form-control">
+                                <option value="">All Platforms</option>
+                                <option value="Android">Android</option>
+                                <option value="iOS">iOS</option>
+                                <option value="PC">PC</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="genre" class="form-control">
+                                <option value="">All Genres</option>
+                                <option value="Action">Action</option>
+                                <option value="Strategy">Strategy</option>
+                                <option value="RPG">RPG</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-secondary">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <form action="{{ route('games.index') }}" method="GET">
+                    <div class="form-row">
+                        <div class="col">
+                            <select name="sort_by" class="form-control">
+                                <option value="rating_rata_rata">Rating</option>
+                                <option value="tanggal_rilis">Release Date</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="sort_order" class="form-control">
+                                <option value="desc">Descending</option>
+                                <option value="asc">Ascending</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-info">Sort</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         @if (session('success'))
@@ -84,6 +133,26 @@
                 </tr>
             </tbody>
         </table>
+
+        <h2>Statistik</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Genre Terpopuler</h3>
+                <ul>
+                    @foreach ($popularGenres as $genre)
+                        <li>{{ $genre->genre }} ({{ $genre->total }})</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Platform Terpopuler</h3>
+                <ul>
+                    @foreach ($popularPlatforms as $platform)
+                        <li>{{ $platform->platform }} ({{ $platform->total }})</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -14,6 +14,8 @@ class GameController extends Controller
     {
         $platform = $request->platform;
         $genre = $request->genre;
+        $sortBy = $request->input('sort_by', 'rating_rata_rata');
+        $sortOrder = $request->input('sort_order', 'desc');
 
         $games = Game::when($platform, function ($query, $platform) {
             return $query->where('platform', $platform);
@@ -28,10 +30,26 @@ class GameController extends Controller
             $game->rating_rata_rata = $game->averageCriticScore();
         });
 
+        // Sorting
+        $games = $games->sortBy($sortBy, SORT_REGULAR, $sortOrder === 'desc');
+
         // Hitung rekomendasi
         $recommendations = $this->calculateRecommendations();
 
-        return view('games.index', compact('games', 'recommendations'));
+        // Statistik
+        $popularGenres = Game::select('genre', DB::raw('count(*) as total'))
+            ->groupBy('genre')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
+
+        $popularPlatforms = Game::select('platform', DB::raw('count(*) as total'))
+            ->groupBy('platform')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
+
+        return view('games.index', compact('games', 'recommendations', 'popularGenres', 'popularPlatforms'));
     }
 
     public function create()
@@ -57,7 +75,7 @@ class GameController extends Controller
         $game->tanggal_rilis = $request->tanggal_rilis;
 
         if ($request->hasFile('gambar_cover')) {
-            $imageName = time().'.'.$request->gambar_cover->extension();
+            $imageName = time() . '.' . $request->gambar_cover->extension();
             $request->gambar_cover->move(public_path('images'), $imageName);
             $game->gambar_cover = $imageName;
         }
@@ -99,10 +117,10 @@ class GameController extends Controller
         if ($request->hasFile('gambar_cover')) {
             // Hapus gambar lama
             if ($game->gambar_cover) {
-                Storage::delete('public/images/'.$game->gambar_cover);
+                Storage::delete('public/images/' . $game->gambar_cover);
             }
 
-            $imageName = time().'.'.$request->gambar_cover->extension();
+            $imageName = time() . '.' . $request->gambar_cover->extension();
             $request->gambar_cover->move(public_path('images'), $imageName);
             $game->gambar_cover = $imageName;
         }
@@ -116,24 +134,51 @@ class GameController extends Controller
     }
 
     public function search(Request $request)
-{
-    $keyword = $request->keyword;
-    $games = Game::where('judul', 'like', "%$keyword%")
-        ->orWhere('platform', 'like', "%$keyword%")
-        ->orWhere('genre', 'like', "%$keyword%")
-        ->get();
+    {
+        $keyword = $request->keyword;
+        $sortBy = $request->input('sort_by', 'rating_rata_rata');
+        $sortOrder = $request->input('sort_order', 'desc');
 
-    // Hitung ulang rekomendasi
-    $recommendations = $this->calculateRecommendations();
+        if ($keyword) {
+            $games = Game::where('judul', 'like', "%$keyword%")
+                ->orWhere('platform', 'like', "%$keyword%")
+                ->orWhere('genre', 'like', "%$keyword%")
+                ->get();
+        } else {
+            $games = Game::all();
+        }
 
-    return view('games.index', compact('games', 'recommendations'));
-}
+        $games->each(function ($game) {
+            $game->rating_rata_rata = $game->averageCriticScore();
+        });
+
+        // Sorting
+        $games = $games->sortBy($sortBy, SORT_REGULAR, $sortOrder === 'desc');
+
+        // Hitung ulang rekomendasi
+        $recommendations = $this->calculateRecommendations();
+
+        // Statistik
+        $popularGenres = Game::select('genre', DB::raw('count(*) as total'))
+            ->groupBy('genre')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
+
+        $popularPlatforms = Game::select('platform', DB::raw('count(*) as total'))
+            ->groupBy('platform')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
+
+        return view('games.index', compact('games', 'recommendations', 'popularGenres', 'popularPlatforms'));
+    }
 
     public function destroy(Game $game)
     {
         // Hapus gambar
         if ($game->gambar_cover) {
-            Storage::delete('public/images/'.$game->gambar_cover);
+            Storage::delete('public/images/' . $game->gambar_cover);
         }
 
         $game->delete();
@@ -175,11 +220,12 @@ class GameController extends Controller
             if ($otherGames->isNotEmpty()) {
                 $bestGame = $otherGames->first();
             }
+            return [
+                'highestRatedGame' => $highestRatedGame,
+                'bestGame' => $bestGame,
+            ];
         }
 
-        return [
-            'highestRatedGame' => $highestRatedGame,
-            'bestGame' => $bestGame,
-        ];
+        return [];
     }
 }
