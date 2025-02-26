@@ -116,18 +116,18 @@ class GameController extends Controller
     }
 
     public function search(Request $request)
-    {
-        $keyword = $request->keyword;
-        $games = Game::where('judul', 'like', "%$keyword%")
-            ->orWhere('platform', 'like', "%$keyword%")
-            ->orWhere('genre', 'like', "%$keyword%")
-            ->get();
+{
+    $keyword = $request->keyword;
+    $games = Game::where('judul', 'like', "%$keyword%")
+        ->orWhere('platform', 'like', "%$keyword%")
+        ->orWhere('genre', 'like', "%$keyword%")
+        ->get();
 
-        // Hitung ulang rekomendasi
-        $recommendations = $this->calculateRecommendations();
+    // Hitung ulang rekomendasi
+    $recommendations = $this->calculateRecommendations();
 
-        return view('games.index', compact('games', 'recommendations'));
-    }
+    return view('games.index', compact('games', 'recommendations'));
+}
 
     public function destroy(Game $game)
     {
