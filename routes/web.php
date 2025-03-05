@@ -1,18 +1,12 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\IklanController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PharmacyController;
-use App\Http\Controllers\ReporterController;
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\NilaiController;
+
 
 Route::get('/', function () {
     return view('welcome');
