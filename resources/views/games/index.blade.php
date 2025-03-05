@@ -16,11 +16,10 @@
                 </div>
             </form>
             
-        <!-- Menambahkan Sort -->
-        <div class="row mb-3">
-            <div class="col-md-12">
+            <!-- Menambahkan Sort -->
+            <div class="col-md-6">
                 <form action="{{ route('games.index') }}" method="GET">
-                    <div class="form-row">
+                    <div class="row">
                         <div class="col">
                             <select name="sort_by" class="form-control">
                                 <option value="rating_rata_rata">Rating</option>
@@ -41,10 +40,11 @@
             </div>
         </div>
 
-        <!-- menambahkan filter -->
-        <div class="col-md-6">
+        <!-- Menambahkan Filter -->
+        <div class="row mb-3">
+            <div class="col-md-12">
                 <form action="{{ route('games.index') }}" method="GET">
-                    <div class="form-row">
+                    <div class="row">
                         <div class="col">
                             <select name="platform" class="form-control">
                                 <option value="">All Platforms</option>

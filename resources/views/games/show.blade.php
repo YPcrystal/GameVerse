@@ -14,7 +14,7 @@
             color: gold;
             margin-right: 5px;
         }
-        .star-rating i.empty{
+        .star-rating i.empty {
             color: #ccc;
         }
     </style>
@@ -67,7 +67,6 @@
                     @else
                         <p>User: Tidak diketahui</p>
                     @endif
-                    {{-- Hapus form delete review --}}
                 </li>
             @endforeach
         </ul>
