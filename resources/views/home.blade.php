@@ -636,10 +636,9 @@
         <nav>
             <a href="#home">Home</a>
             <a href="/games">Games</a>
-            <a href="/reviews">Review</a>
+            <a href="/iklans">iklan</a>
             <a href="/login">Login</a>
             <a href="/register">Register</a>
-            <a href="/iklans">iklan</a>
         </nav>
         <div class="search">
             <input type="text" placeholder="Search">
