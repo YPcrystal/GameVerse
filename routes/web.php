@@ -5,6 +5,8 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\IklanController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,10 +31,17 @@ Route::prefix('games/{game}')->middleware(['auth'])->group(function () {
     Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    });
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
