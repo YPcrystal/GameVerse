@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; // Tambahkan ini
 
+use App\Http\Controllers\Controller; // Tambahkan ini
 use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Review;

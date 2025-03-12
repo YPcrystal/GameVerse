@@ -10,6 +10,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
+// admin routes
+use App\Http\Controllers\Admin\AdminController as AdminAdminController;
+use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\IklanController as AdminIklanController;
+
 // Rute untuk halaman beranda dan home
 Route::get('/', [PublicController::class, 'index'])->name('public.dashboard');
 Route::get('/home', function () {
@@ -30,29 +37,14 @@ Route::prefix('games/{game}')->middleware(['auth'])->group(function () {
     Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-// Rute untuk dashboard user dan admin
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
-
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-        Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
-        Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
-        Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
-        Route::patch('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-        Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
-
-        Route::get('/admin/games', [AdminController::class, 'games'])->name('admin.games');
-        Route::get('/admin/games/create', [AdminController::class, 'createGame'])->name('admin.games.create');
-        Route::post('/admin/games', [AdminController::class, 'storeGame'])->name('admin.games.store');
-        Route::get('/admin/games/{game}/edit', [AdminController::class, 'editGame'])->name('admin.games.edit');
-        Route::patch('/admin/games/{game}', [AdminController::class, 'updateGame'])->name('admin.games.update');
-        Route::delete('/admin/games/{game}', [AdminController::class, 'destroyGame'])->name('admin.games.destroy');
-
-        Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
-        Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyReview'])->name('admin.reviews.destroy');
-    });
+// Rute untuk dashboard admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminAdminController::class, 'index'])->name('admin.dashboard');
+    Route::resource('games', AdminGameController::class);
+    Route::resource('iklan', AdminIklanController::class);
+    Route::resource('reviews', AdminReviewController::class);
+    Route::resource('users', AdminUserController::class);
+    // Tambahkan rute admin lainnya di sini
 });
 
 // Rute untuk profil pengguna
