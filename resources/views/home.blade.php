@@ -638,7 +638,12 @@
             <a href="/games">Games</a>
             <a href="/iklans">iklan</a>
             @auth
-                <a href="{{ route('logout') }}"
+                @if(Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                @else
+                    <a href="{{ route('dashboard') }}">User Dashboard</a>
+                @endif            
+                <a href="{{ route('logout') }}" 
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
                 </a>

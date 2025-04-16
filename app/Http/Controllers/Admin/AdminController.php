@@ -10,10 +10,12 @@ use App\Models\Review;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('admin.dashboard');
-    }
+    
+public function index()
+{
+    dd(Auth::user()); // untuk melihat user yang sedang login dan apakah dia admin
+    return view('admin.dashboard');
+}
 
     // Mengelola pengguna
     public function users()
