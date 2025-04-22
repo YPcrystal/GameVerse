@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Game;
 use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    
+
 public function index()
 {
-    dd(Auth::user()); // untuk melihat user yang sedang login dan apakah dia admin
+    // dd(Auth::user()); // untuk melihat user yang sedang login dan apakah dia admin
     return view('admin.dashboard');
 }
 

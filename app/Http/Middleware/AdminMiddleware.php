@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
-    {
-        // Periksa apakah pengguna sudah login dan merupakan admin
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            return $next($request);
-        }
-        return redirect('/')->with('error', 'You are not authorized to access this page.');        
+{
+    if (Auth::check() && Auth::user()->role === 'admin') {
+        return $next($request);
     }
+
+    return redirect('/')->with('error', 'You do not have admin access.');
+}
+
 }

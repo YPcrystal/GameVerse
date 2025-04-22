@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     public function index(Game $game)
-    {
-        $reviews = $game->reviews;
-        return view('reviews.index', compact('game', 'reviews'));
-    }
+{
+    $reviews = Review::with('user')->get();
+    $games = Game::all(); // Fetch all games or modify as needed
+    return view('admin.reviews.index', compact('reviews', 'games'));
+}
 
     public function create(Game $game)
     {

@@ -39,11 +39,11 @@ Route::prefix('games/{game}')->middleware(['auth'])->group(function () {
     Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-
+Route::get('/reviews', [GameController::class, 'show'])->name('reviews.index');
 
 // Rute untuk dashboard admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminAdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('dashboard', [AdminAdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('games', AdminGameController::class);
     Route::resource('iklan', AdminIklanController::class);
     Route::resource('reviews', AdminReviewController::class);
