@@ -4,6 +4,8 @@
 
 @section('content')
 <div class="container mt-3">
+    <h1 class="mb-4 text-center">Kelola Game</h1>
+
     <!-- Search and Filter Section -->
     <div class="row mb-4">
         <div class="col-md-6">
@@ -37,7 +39,7 @@
     <div class="mb-4">
         <a href="{{ route('games.create') }}" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Game Baru</a>
         @if ($games->count() > 0)
-            <table class="table table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Judul</th>
@@ -57,12 +59,12 @@
                             <td>{{ $game->tanggal_rilis }}</td>
                             <td>{{ number_format($game->rating_rata_rata, 1) }}</td>
                             <td>
-                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Lihat Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Game"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('games.destroy', $game->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Game"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -70,33 +72,45 @@
                 </tbody>
             </table>
         @else
-            <p class="text-center">Tidak ada game yang ditemukan.</p>
+            <p class="text-center text-danger">Tidak ada game yang ditemukan.</p>
         @endif
     </div>
 
     <!-- Statistik Section -->
     <div class="row">
         <div class="col-md-6">
-            <h3>Genre Terpopuler</h3>
-            <ul class="list-group">
-                @foreach ($popularGenres as $genre)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $genre->genre }}
-                        <span class="badge bg-primary rounded-pill">{{ $genre->total }}</span>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">Genre Terpopuler</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach ($popularGenres as $genre)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $genre->genre }}
+                                <span class="badge bg-primary rounded-pill">{{ $genre->total }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-            <h3>Platform Terpopuler</h3>
-            <ul class="list-group">
-                @foreach ($popularPlatforms as $platform)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $platform->platform }}
-                        <span class="badge bg-success rounded-pill">{{ $platform->total }}</span>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title">Platform Terpopuler</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach ($popularPlatforms as $platform)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $platform->platform }}
+                                <span class="badge bg-success rounded-pill">{{ $platform->total }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
