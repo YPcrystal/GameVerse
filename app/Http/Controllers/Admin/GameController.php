@@ -51,7 +51,7 @@ class GameController extends Controller
             ->limit(5)
             ->get();
 
-        return view('games.index', compact('games', 'recommendations', 'popularGenres', 'popularPlatforms'));
+        return view('admin.games.index', compact('games', 'recommendations', 'popularGenres', 'popularPlatforms'));
     }
 
     public function create()

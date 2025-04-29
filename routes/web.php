@@ -45,7 +45,7 @@ Route::get('/reviews', [GameController::class, 'show'])->name('reviews.index');
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminAdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('games', AdminGameController::class);
-    Route::resource('iklan', AdminIklanController::class);
+    Route::resource('iklans', AdminIklanController::class);
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('users', AdminUserController::class);
     // Tambahkan rute admin lainnya di sini

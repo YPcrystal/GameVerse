@@ -57,11 +57,6 @@
                                 Kelola Review
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.index') }}">
-                                Kelola Pengguna
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </nav>

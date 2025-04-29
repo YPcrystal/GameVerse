@@ -14,7 +14,7 @@ class IklanController extends Controller
     public function index(): View
     {
         $iklans = Iklan::with('game')->get();
-        return view('iklans.index', compact('iklans'));
+        return view('admin.iklans.index', compact('iklans'));
     }
 
     public function create(): View
