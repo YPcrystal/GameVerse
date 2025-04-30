@@ -3,10 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\ForumController;
 use App\Http\Controllers\IklanController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
+// use App\Http\Controllers\AdminController;
+// use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -15,6 +14,13 @@ use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\IklanController as AdminIklanController;
+
+// user routes
+use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\UserGameController;
+use App\Http\Controllers\User\UserReviewController;
+use App\Http\Controllers\User\UserIklanController;
+use App\Http\Controllers\User\UserProfileController; //klo user memiliki banyak profile
 
 // Rute untuk halaman beranda dan home
 Route::get('/', function () {
@@ -52,10 +58,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 });
 
 // Untuk user biasa
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user.dashboard'); // Pastikan file view ini ada
-    })->name('dashboard');
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    Route::resource('games', UserGameController::class);
+    Route::resource('iklans', UserIklanController::class);
+    Route::resource('reviews', UserReviewController::class);
+    Route::resource('profiles', UserProfileController::class); // Jika user memiliki banyak profile
 });
 
 // Untuk user yang sudah login

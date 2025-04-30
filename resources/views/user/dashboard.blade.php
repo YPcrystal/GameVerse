@@ -44,26 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="card-title">Aktivitas Terbaru</h5>
-                </div>
-                <div class="card-body">
-                    @if ($recentActivities->count() > 0)
-                        <ul class="list-group">
-                            @foreach ($recentActivities as $activity)
-                                <li class="list-group-item">
-                                    {{ $activity->description }} - <small>{{ $activity->created_at->diffForHumans() }}</small>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-muted">Belum ada aktivitas terbaru.</p>
-                    @endif
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

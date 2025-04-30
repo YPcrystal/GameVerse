@@ -46,20 +46,20 @@ class User extends Authenticatable
         ];
     }
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-    
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
+
+    public function iklans()
+    {
+        return $this->hasMany(Iklan::class);
+    }
+
+    // public function activities()
+    // {
+    //     return $this->hasMany(Activity::class);
+    // }
 
 //     public function recommendations()
 // {
