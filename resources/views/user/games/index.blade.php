@@ -1,85 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Daftar Game</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Daftar Game</h1>
+@extends('layouts.user')
 
-        <div class="row mb-3">
-            <form action="{{ route('games.search') }}" method="GET" class="col-md-6">
-                <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search games...">
-                    <button class="btn btn-primary" type="submit">Search</button>
+@section('title', 'Kelola Game')
+
+@section('content')
+<div class="container mt-3">
+    <h1 class="mb-4 text-center">Kelola Game</h1>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form action="{{ route('games.search') }}" method="GET" class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Cari game...">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form action="{{ route('games.index') }}" method="GET" class="row">
+                <div class="col">
+                    <select name="sort_by" class="form-control">
+                        <option value="rating_rata_rata">Rating</option>
+                        <option value="tanggal_rilis">Tanggal Rilis</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select name="sort_order" class="form-control">
+                        <option value="desc">Menurun</option>
+                        <option value="asc">Menaik</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-sort"></i> Urutkan</button>
                 </div>
             </form>
-            
-            <!-- Menambahkan Sort -->
-            <div class="col-md-6">
-                <form action="{{ route('games.index') }}" method="GET">
-                    <div class="row">
-                        <div class="col">
-                            <select name="sort_by" class="form-control">
-                                <option value="rating_rata_rata">Rating</option>
-                                <option value="tanggal_rilis">Release Date</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <select name="sort_order" class="form-control">
-                                <option value="desc">Descending</option>
-                                <option value="asc">Ascending</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-info">Sort</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
+    </div>
 
-        <!-- Menambahkan Filter -->
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <form action="{{ route('games.index') }}" method="GET">
-                    <div class="row">
-                        <div class="col">
-                            <select name="platform" class="form-control">
-                                <option value="">All Platforms</option>
-                                <option value="Android">Android</option>
-                                <option value="iOS">iOS</option>
-                                <option value="PC">PC</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <select name="genre" class="form-control">
-                                <option value="">All Genres</option>
-                                <option value="Action">Action</option>
-                                <option value="Strategy">Strategy</option>
-                                <option value="RPG">RPG</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-secondary">Filter</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <a href="{{ route('games.create') }}" class="btn btn-primary mb-3">Tambah Game Baru</a>
-
+    <!-- Game Table -->
+    <div class="mb-4">
+        <a href="{{ route('games.create') }}" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Game Baru</a>
         @if ($games->count() > 0)
-            <table class="table table-bordered">
-                <thead>
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
                         <th>Judul</th>
                         <th>Platform</th>
@@ -98,12 +59,12 @@
                             <td>{{ $game->tanggal_rilis }}</td>
                             <td>{{ number_format($game->rating_rata_rata, 1) }}</td>
                             <td>
-                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm">Detail</a>
-                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Lihat Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Game"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('games.destroy', $game->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Game"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -111,53 +72,46 @@
                 </tbody>
             </table>
         @else
-            <p>Tidak ada game yang ditemukan.</p>
+            <p class="text-center text-danger">Tidak ada game yang ditemukan.</p>
         @endif
+    </div>
 
-        <h2>Rekomendasi</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Kategori</th>
-                    <th>Nama Game</th>
-                    <th>Alasan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Game dengan rating tertinggi</td>
-                    <td>{{ $recommendations['highestRatedGame']->judul ?? '-' }}</td>
-                    <td>Game dengan rating rata-rata tertinggi.</td>
-                </tr>
-                <tr>
-                    <td>Game terbaik</td>
-                    <td>{{ $recommendations['bestGame']->judul ?? '-' }}</td>
-                    <td>Game dengan kombinasi rating dan jumlah review terbaik.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Statistik</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Genre Terpopuler</h3>
-                <ul>
-                    @foreach ($popularGenres as $genre)
-                        <li>{{ $genre->genre }} ({{ $genre->total }})</li>
-                    @endforeach
-                </ul>
+    <!-- Statistik Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">Genre Terpopuler</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach ($popularGenres as $genre)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $genre->genre }}
+                                <span class="badge bg-primary rounded-pill">{{ $genre->total }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h3>Platform Terpopuler</h3>
-                <ul>
-                    @foreach ($popularPlatforms as $platform)
-                        <li>{{ $platform->platform }} ({{ $platform->total }})</li>
-                    @endforeach
-                </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title">Platform Terpopuler</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach ($popularPlatforms as $platform)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $platform->platform }}
+                                <span class="badge bg-success rounded-pill">{{ $platform->total }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+@endsection
