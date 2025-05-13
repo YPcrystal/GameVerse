@@ -91,9 +91,12 @@ class UserGameController extends Controller
     }
 
     public function show(Game $game)
-    {
-        return view('user.games.show', compact('game'));
-    }
+{
+    // Ambil review milik pengguna yang sedang login untuk game ini
+    $userReview = $game->reviews()->where('user_id', Auth::id())->first();
+
+    return view('user.games.show', compact('game', 'userReview'));
+}
 
     public function edit(Game $game)
     {

@@ -60,7 +60,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 // Untuk user biasa
 Route::middleware(['auth'])->prefix('user')->group(function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::resource('games', UserGameController::class);
+    Route::get('games/{game}', [UserGameController::class, 'show'])->name('games.show');
     Route::resource('iklans', UserIklanController::class);
     Route::resource('reviews', UserReviewController::class);
     Route::resource('profiles', UserProfileController::class); // Jika user memiliki banyak profile

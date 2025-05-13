@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserReviewController extends Controller
 {
+
     public function index()
     {
         // Ambil semua review milik pengguna yang sedang login
         $reviews = Review::where('user_id', Auth::id())->with('game')->get();
-        // Ambil semua game untuk ditampilkan di form
-        $games = Game::all();
-
-        return view('user.reviews.index', compact('reviews', 'games'));
+    
+        return view('user.reviews.index', compact('reviews'));
     }
 
     public function create()
