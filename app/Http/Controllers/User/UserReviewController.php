@@ -14,8 +14,10 @@ class UserReviewController extends Controller
     {
         // Ambil semua review milik pengguna yang sedang login
         $reviews = Review::where('user_id', Auth::id())->with('game')->get();
+        // Ambil semua game untuk ditampilkan di form
+        $games = Game::all();
 
-        return view('user.reviews.index', compact('reviews'));
+        return view('user.reviews.index', compact('reviews', 'games'));
     }
 
     public function create()
