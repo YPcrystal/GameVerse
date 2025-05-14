@@ -38,8 +38,8 @@
                         <td>{{ $review->comment }}</td>
                         <td>
                             <a href="{{ route('games.show', $review->game->id) }}" class="btn btn-info btn-sm">Detail</a>
-                            <a href="{{ route('reviews.edit', $review->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('user.reviews.edit', $review->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('user.reviews.destroy', $review->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus review ini?')">Hapus</button>

@@ -15,7 +15,7 @@
             </form>
         </div>
         <div class="col-md-6">
-            <form action="{{ route('games.index') }}" method="GET" class="row">
+            <form action="{{ route('user.games.index') }}" method="GET" class="row">
                 <div class="col">
                     <select name="sort_by" class="form-control">
                         <option value="rating_rata_rata">Rating</option>
@@ -37,7 +37,7 @@
 
     <!-- Game Table -->
     <div class="mb-4">
-        <a href="{{ route('games.create') }}" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Game Baru</a>
+        <a href="{{ route('user.games.create') }}" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Game Baru</a>
         @if ($games->count() > 0)
             <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
@@ -59,9 +59,9 @@
                             <td>{{ $game->tanggal_rilis }}</td>
                             <td>{{ number_format($game->rating_rata_rata, 1) }}</td>
                             <td>
-                                <a href="{{ route('games.show', $game->id) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Lihat Detail"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Game"><i class="fas fa-edit"></i></a>
-                                <form action="{{ route('games.destroy', $game->id) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('user.games.show', $game->id) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Lihat Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('user.games.edit', $game->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Game"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('user.games.destroy', $game->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Game"><i class="fas fa-trash"></i></button>
