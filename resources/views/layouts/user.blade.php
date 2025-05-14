@@ -56,13 +56,13 @@
             <a href="{{ route('user.dashboard') }}" class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home me-2"></i> Dashboard
             </a>
-            <a href="{{ route('games.index') }}" class="nav-link {{ request()->routeIs('games.index') ? 'active' : '' }}">
+            <a href="{{ route('user.games.index') }}" class="nav-link {{ request()->routeIs('games.index') ? 'active' : '' }}">
                 <i class="fas fa-gamepad me-2"></i> Games
             </a>
-            <a href="{{ route('iklans.index') }}" class="nav-link {{ request()->routeIs('iklans.index') ? 'active' : '' }}">
+            <a href="{{ route('user.iklans.index') }}" class="nav-link {{ request()->routeIs('iklans.index') ? 'active' : '' }}">
                 <i class="fas fa-ad me-2"></i> Iklan
             </a>
-            <a href="{{ route('reviews.index') }}" class="nav-link {{ request()->routeIs('reviews.index') ? 'active' : '' }}">
+            <a href="{{ route('user.reviews.index') }}" class="nav-link {{ request()->routeIs('reviews.index') ? 'active' : '' }}">
                 <i class="fas fa-star me-2"></i> Review
             </a>
             <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
