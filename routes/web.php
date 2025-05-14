@@ -48,8 +48,8 @@ Route::prefix('games/{game}')->middleware(['auth'])->group(function () {
 Route::get('/reviews', [GameController::class, 'show'])->name('reviews.index');
 
 // Rute untuk dashboard admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('dashboard', [AdminAdminController::class, 'index'])->name('admin.dashboard');
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('dashboard', [AdminAdminController::class, 'index'])->name('dashboard');
     Route::resource('games', AdminGameController::class);
     Route::resource('iklans', AdminIklanController::class);
     Route::resource('reviews', AdminReviewController::class);
@@ -58,9 +58,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 });
 
 // Untuk user biasa
-Route::middleware(['auth'])->prefix('user')->group(function () {
-    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('games/{game}', [UserGameController::class, 'show'])->name('games.show');
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('games', UserGameController::class);
     Route::resource('iklans', UserIklanController::class);
     Route::resource('reviews', UserReviewController::class);
     Route::resource('profiles', UserProfileController::class); // Jika user memiliki banyak profile
