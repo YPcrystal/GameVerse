@@ -60,13 +60,13 @@
             <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-tachometer-alt me-2"></i> Dashboard
             </a>
-            <a href="{{ route('admin.games.index') }}" class="nav-link {{ request()->routeIs('admin.games.index') ? 'active' : '' }}">
+            <a href="{{ route('games.index') }}" class="nav-link {{ request()->routeIs('games.index') ? 'active' : '' }}">
                 <i class="fas fa-gamepad me-2"></i> Kelola Game
             </a>
-            <a href="{{ route('admin.iklans.index') }}" class="nav-link {{ request()->routeIs('admin.iklans.index') ? 'active' : '' }}">
+            <a href="{{ route('iklans.index') }}" class="nav-link {{ request()->routeIs('iklans.index') ? 'active' : '' }}">
                 <i class="fas fa-ad me-2"></i> Kelola Iklan
             </a>
-            <a href="{{ route('admin.reviews.index') }}" class="nav-link {{ request()->routeIs('admin.reviews.index') ? 'active' : '' }}">
+            <a href="{{ route('reviews.index') }}" class="nav-link {{ request()->routeIs('reviews.index') ? 'active' : '' }}">
                 <i class="fas fa-star me-2"></i> Kelola Review
             </a>
             <a href="{{ route('logout') }}" class="nav-link mt-auto" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
