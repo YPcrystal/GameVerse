@@ -29,10 +29,10 @@
                     <td>{{ $iklan->durasi }}</td>
                     <td>{{ $iklan->harga }}</td>
                     <td>{{ $iklan->status }}</td>
-                    <td class="actions">
-                        <a href="{{ route('iklans.show', $iklan->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Detail</a>
-                        <a href="{{ route('iklans.edit', $iklan->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                        <form action="{{ route('iklans.destroy', $iklan->id) }}" method="POST" style="display:inline;">
+                    <td class="actions">                    
+                    <a href="{{ route('admin.iklans.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Iklan</a>
+                    <a href="{{ route('admin.iklans.show', $iklan->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Detail</a>
+                    <a href="{{ route('admin.iklans.edit', $iklan->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
