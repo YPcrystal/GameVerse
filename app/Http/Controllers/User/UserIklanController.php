@@ -29,23 +29,20 @@ class UserIklanController extends Controller
     public function store(Request $request)
     {
         // Validasi input
-        $request->validate([
+        $validated = $request->validate([
             'game_id' => 'required|exists:games,id',
             'durasi' => 'required|integer|min:1',
             'harga' => 'required|integer|min:0',
             'status' => 'required|in:aktif,nonaktif',
         ]);
 
-        // Simpan iklan baru dengan user_id dari pengguna yang sedang login
-        Iklan::create([
-            'user_id' => Auth::id(),
-            'game_id' => $request->game_id,
-            'durasi' => $request->durasi,
-            'harga' => $request->harga,
-            'status' => $request->status,
-        ]);
+        // Tambahkan user_id dari user yang sedang login
+        $validated['user_id'] = Auth::id();
 
-        return redirect()->route('iklans.index')->with('success', 'Iklan berhasil ditambahkan!');
+        // Simpan iklan baru
+        Iklan::create($validated);
+
+        return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil ditambahkan!');
     }
 
     public function show(Iklan $iklan)
@@ -79,7 +76,7 @@ class UserIklanController extends Controller
         }
 
         // Validasi input
-        $request->validate([
+        $validated = $request->validate([
             'game_id' => 'required|exists:games,id',
             'durasi' => 'required|integer|min:1',
             'harga' => 'required|integer|min:0',
@@ -87,14 +84,9 @@ class UserIklanController extends Controller
         ]);
 
         // Update iklan
-        $iklan->update([
-            'game_id' => $request->game_id,
-            'durasi' => $request->durasi,
-            'harga' => $request->harga,
-            'status' => $request->status,
-        ]);
+        $iklan->update($validated);
 
-        return redirect()->route('iklans.index')->with('success', 'Iklan berhasil diperbarui!');
+        return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil diperbarui!');
     }
 
     public function destroy(Iklan $iklan)
@@ -107,6 +99,6 @@ class UserIklanController extends Controller
         // Hapus iklan
         $iklan->delete();
 
-        return redirect()->route('iklans.index')->with('success', 'Iklan berhasil dihapus!');
+        return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil dihapus!');
     }
 }
