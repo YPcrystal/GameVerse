@@ -3,129 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Dashboard')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>GameVerse - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: 'Nunito', sans-serif; /* Menggunakan font dari contoh admin dashboard */
+        :root {
+            --primary: #7000FF;
+            --secondary: #FF00E5;
+            --accent: #00FF94;
+            --dark: #0A041C;
+            --light: #F5F3FF;
         }
-        .sidebar {
-            width: 250px; /* Lebar sidebar disesuaikan dari user dashboard */
-            background-color: #343a40; /* Warna latar sidebar dari user dashboard */
-            color: #fff; /* Warna teks sidebar dari user dashboard */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            display: flex;
             min-height: 100vh;
         }
-        .sidebar .nav-link {
-            color: #adb5bd; /* Warna link dari user dashboard */
-            padding: 10px 20px; /* Padding disesuaikan dari admin dashboard example */
-            display: block;
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: rgba(10, 4, 28, 0.95);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-admin {
+            font-family: 'Oxanium', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .nav-admin {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .nav-link {
+            color: var(--light);
             text-decoration: none;
-        }
-        .sidebar .nav-link.active, .sidebar .nav-link:hover {
-            background-color: #495057; /* Warna link aktif/hover dari user dashboard */
-            color: #fff; /* Warna teks link aktif/hover dari user dashboard */
-        }
-        .main-content {
-            padding: 20px;
-            flex-grow: 1;
-        }
-        .dashboard-header {
-            margin-bottom: 20px;
-            padding-bottom: 0.5rem; /* Disesuaikan dari admin dashboard example (pb-2) */
-            border-bottom: 1px solid #dee2e6; /* Disesuaikan dari admin dashboard example */
-        }
-        .dashboard-header h1 {
-            font-size: 1.5rem; /* Ukuran font h2 dari admin dashboard example */
-            font-weight: bold; /* Font weight dari user dashboard */
-        }
-        .stats-icon {
-            width: 50px;
-            height: 50px;
+            padding: 1rem;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            gap: 1rem;
+            transition: all 0.3s ease;
         }
-        .card-custom {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .nav-link:hover {
+            background: rgba(112,0,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary), rgba(112,0,255,0));
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-card h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Data Tables */
+        .data-table {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            background: rgba(112,0,255,0.2);
+            color: var(--accent);
+        }
+
+        /* Charts */
+        .chart-container {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                margin-left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="d-flex">
-        <nav class="sidebar d-flex flex-column">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-admin">GAMEVERSE ADMIN</div>
+        <nav class="nav-admin">
+            <a href="#" class="nav-link active">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
             </a>
-            <a href="{{ route('admin.games.index') }}" class="nav-link {{ request()->routeIs('games.index') ? 'active' : '' }}">
-                <i class="fas fa-gamepad me-2"></i> Kelola Game
+            <a href="#" class="nav-link">
+                <i class="fas fa-users"></i>
+                Users
             </a>
-            <a href="{{ route('admin.iklans.index') }}" class="nav-link {{ request()->routeIs('iklans.index') ? 'active' : '' }}">
-                <i class="fas fa-ad me-2"></i> Kelola Iklan
+            <a href="#" class="nav-link">
+                <i class="fas fa-gamepad"></i>
+                Games
             </a>
-            <a href="{{ route('admin.reviews.index') }}" class="nav-link {{ request()->routeIs('reviews.index') ? 'active' : '' }}">
-                <i class="fas fa-star me-2"></i> Kelola Review
+            <a href="#" class="nav-link">
+                <i class="fas fa-ad"></i>
+                Advertisements
             </a>
-            <a href="{{ route('logout') }}" class="nav-link mt-auto" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            <a href="#" class="nav-link">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
         </nav>
+    </div>
 
-        <div class="main-content">
-            <header class="dashboard-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center"> <h1 class="h2">@yield('title', 'Dashboard')</h1> </header>
-
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-primary text-white"> <i class="fas fa-gamepad"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Games</h5>
-                                <p class="mb-0">{{ $totalGames ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <div class="header-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
                 </div>
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-success text-white"> <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Iklan</h5>
-                                <p class="mb-0">{{ $totalAds ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-warning text-white"> <i class="fas fa-star"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Review</h5>
-                                <p class="mb-0">{{ $totalReviews ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="user-profile">
+                    <img src="avatar.png" alt="Profile" class="avatar">
                 </div>
             </div>
+        </div>
 
-            <div class="mt-4">
-                @yield('content')
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="stat-number">1,234</div>
             </div>
+            <div class="stat-card">
+                <h3>Active Games</h3>
+                <div class="stat-number">567</div>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <div class="stat-number">$12,345</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Reviews</h3>
+                <div class="stat-number">89</div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-container">
+            <canvas id="mainChart"></canvas>
+        </div>
+
+        <!-- Recent Activities Table -->
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Added new game</td>
+                        <td>2024-03-15</td>
+                        <td><span class="status-success">Completed</span></td>
+                    </tr>
+                    <!-- Add more rows -->
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        // Sample Chart.js implementation
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Users',
+                    data: [65, 59, 80, 81, 56, 55],
+                    borderColor: '#7000FF',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(112,0,255,0.2)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
 </body>
 </html>
