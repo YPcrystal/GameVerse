@@ -3,132 +3,178 @@
 @section('title', 'Dashboard')
 @section('header', 'Admin Dashboard')
 
+@push('styles')
+<style>
+    .main-content {
+        flex: 1;
+        margin-left: 280px;
+        padding: 2rem;
+    }
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .stat-card {
+        background: rgba(255,255,255,0.05);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-card h3 {
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .data-table {
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 2rem;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    th {
+        background: rgba(112,0,255,0.2);
+        color: var(--accent);
+    }
+    .chart-container {
+        background: rgba(255,255,255,0.05);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+    }
+    .status-success {
+        color: #00FF94;
+        font-weight: bold;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            margin-left: 0;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+        .admin-header {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
-<div class="stats-grid">
-    <!-- Stat Cards -->
-    <div class="stat-card">
-        <h3>Total Pengguna</h3>
-        <div class="stat-number">2,548</div>
-        <div class="stat-compare">
-            <i class="fas fa-arrow-up text-success"></i> 12.5% dari bulan lalu
+<div class="main-content">
+    <!-- Header -->
+    <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <div class="header-right">
+            <div class="search">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-profile">
+                <img src="{{ asset('images/avatar.png') }}" alt="Profile" class="avatar" style="width:40px; border-radius:50%;">
+            </div>
         </div>
     </div>
 
-    <div class="stat-card">
-        <h3>Game Aktif</h3>
-        <div class="stat-number">327</div>
-        <div class="stat-compare">
-            <i class="fas fa-arrow-down text-danger"></i> 3% dari bulan lalu
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <div class="stat-number">1,234</div>
+        </div>
+        <div class="stat-card">
+            <h3>Active Games</h3>
+            <div class="stat-number">567</div>
+        </div>
+        <div class="stat-card">
+            <h3>Revenue</h3>
+            <div class="stat-number">$12,345</div>
+        </div>
+        <div class="stat-card">
+            <h3>Pending Reviews</h3>
+            <div class="stat-number">89</div>
         </div>
     </div>
 
-    <div class="stat-card">
-        <h3>Pendapatan</h3>
-        <div class="stat-number">$15,230</div>
-        <div class="stat-compare">
-            <i class="fas fa-arrow-up text-success"></i> 24% dari bulan lalu
-        </div>
+    <!-- Chart Section -->
+    <div class="chart-container">
+        <canvas id="mainChart"></canvas>
     </div>
 
-    <div class="stat-card">
-        <h3>Ulasan Baru</h3>
-        <div class="stat-number">89</div>
-        <div class="stat-compare">
-            <i class="fas fa-comments"></i> 45 perlu moderasi
-        </div>
+    <!-- Recent Activities Table -->
+    <div class="data-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Added new game</td>
+                    <td>2024-03-15</td>
+                    <td><span class="status-success">Completed</span></td>
+                </tr>
+                <!-- Tambahkan baris lain sesuai kebutuhan -->
+            </tbody>
+        </table>
     </div>
-</div>
-
-<div class="chart-container">
-    <canvas id="performanceChart"></canvas>
-</div>
-
-<div class="data-table">
-    <div class="table-header">
-        <h3>Aktivitas Terbaru</h3>
-        <a href="#" class="btn-view-all">
-            Lihat Semua <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Pengguna</th>
-                <th>Aktivitas</th>
-                <th>Waktu</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
-                        <div class="user-details">
-                            <div class="user-name">John Doe</div>
-                            <div class="user-role">Administrator</div>
-                        </div>
-                    </div>
-                </td>
-                <td>Menambahkan game baru "Cyber Revolution"</td>
-                <td>15 Menit lalu</td>
-                <td><span class="status-success">Berhasil</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
-                        <div class="user-details">
-                            <div class="user-name">Jane Smith</div>
-                            <div class="user-role">Moderator</div>
-                        </div>
-                    </div>
-                </td>
-                <td>Memperbarui halaman pembayaran</td>
-                <td>1 Jam lalu</td>
-                <td><span class="status-pending">Dalam Proses</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
-                        <div class="user-details">
-                            <div class="user-name">System</div>
-                            <div class="user-role">Automated</div>
-                        </div>
-                    </div>
-                </td>
-                <td>Backup database harian</td>
-                <td>3 Jam lalu</td>
-                <td><span class="status-success">Selesai</span></td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Performance Chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
+    // Sample Chart.js implementation
+    const ctx = document.getElementById('mainChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             datasets: [{
-                label: 'Pendapatan',
-                data: [6500, 8900, 12000, 10500, 15230, 14300],
-                backgroundColor: 'rgba(112,0,255,0.8)',
-                borderColor: 'var(--accent)',
-                borderWidth: 2
-            },
-            {
-                label: 'Pengguna Baru',
-                data: [120, 180, 254, 198, 312, 285],
-                backgroundColor: 'rgba(0,255,148,0.8)',
-                borderColor: 'var(--primary)',
-                borderWidth: 2
+                label: 'Monthly Users',
+                data: [65, 59, 80, 81, 56, 55],
+                borderColor: '#7000FF',
+                tension: 0.4,
+                fill: true,
+                backgroundColor: 'rgba(112,0,255,0.2)'
             }]
         },
         options: {
@@ -136,34 +182,10 @@
             plugins: {
                 legend: {
                     position: 'top',
-                    labels: {
-                        color: 'var(--light)'
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: 'var(--light)',
-                        callback: function(value) {
-                            return 'Rp' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                        }
-                    },
-                    grid: {
-                        color: 'rgba(245,243,255,0.1)'
-                    }
-                },
-                x: {
-                    ticks: {
-                        color: 'var(--light)'
-                    },
-                    grid: {
-                        display: false
-                    }
                 }
             }
         }
     });
 </script>
-@endsection
+<script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+@endpush
