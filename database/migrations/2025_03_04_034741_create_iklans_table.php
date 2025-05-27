@@ -10,10 +10,15 @@ class CreateIklansTable extends Migration
     {
         Schema::create('iklans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('game_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('game_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('judul');
+            $table->text('deskripsi');
+            $table->string('image')->nullable();
             $table->integer('durasi');
             $table->integer('harga');
-            $table->enum('status', ['aktif', 'nonaktif']);
+            $table->enum('status', ['pending', 'aktif'])->default('pending');
+            $table->integer('shown_count')->default(0); // opsional, untuk landing page
             $table->timestamps();
         });
     }

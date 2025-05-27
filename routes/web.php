@@ -66,6 +66,8 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::resource('profiles', UserProfileController::class); // Jika user memiliki banyak profile
 });
 
+Route::get('iklans/{iklan}/payment', [UserIklanController::class, 'payment'])->name('user.iklans.payment');
+
 // Untuk user yang sudah login
 
 // Rute untuk profil pengguna
