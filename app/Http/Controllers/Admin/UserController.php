@@ -10,22 +10,16 @@ class UserController extends Controller
 
 {
     public function index()
-    {
-        $games = Game::all();
-        $popularGenres = Game::select('genre', \DB::raw('COUNT(*) as total'))
-            ->groupBy('genre')
-            ->orderBy('total', 'DESC')
-            ->limit(5)
-            ->get();
+{
+    $games = Game::all();
+    $popularGenres = Game::select('genre', \DB::raw('COUNT(*) as total'))
+    ->groupBy('genre')
+    ->orderBy('total', 'DESC')
+    ->limit(5)
+    ->get();
 
-        $popularPlatforms = Game::select('platform', \DB::raw('COUNT(*) as total'))
-            ->groupBy('platform')
-            ->orderBy('total', 'DESC')
-            ->limit(5)
-            ->get();
-
-        return view('admin.games.index', compact('games', 'popularGenres', 'popularPlatforms'));
-    }
+    return view('games.index', compact('games', 'popularGenres'));
+}
 
     public function show(Game $game)
     {
