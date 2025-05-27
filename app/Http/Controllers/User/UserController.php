@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
 
-class GameController extends Controller
+class UserGameController extends Controller
 {
     public function index()
     {
         $games = Game::all();
-        return view('games.index', compact('games'));
+        return view('user.games.index', compact('games'));
     }
 
     public function show(Game $game)
     {
-        return view('games.show', compact('game'));
+        return view('user.games.show', compact('game'));
     }
 }

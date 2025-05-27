@@ -28,21 +28,28 @@ class UserIklanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
-            'game_id' => 'required|exists:games,id',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
             'durasi' => 'required|integer|min:1',
-            'harga' => 'required|integer|min:0',
-            'status' => 'required|in:aktif,nonaktif',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Tambahkan user_id dari user yang sedang login
-        $validated['user_id'] = Auth::id();
+        $imagePath = $request->file('image')->store('iklans', 'public');
+        $harga = $validated['durasi'] * 10000; // contoh harga per hari
+        $status = 'pending';
 
-        // Simpan iklan baru
-        Iklan::create($validated);
+        $iklan = Iklan::create([
+            'user_id' => Auth::id(),
+            'judul' => $validated['judul'],
+            'deskripsi' => $validated['deskripsi'],
+            'durasi' => $validated['durasi'],
+            'image' => $imagePath,
+            'harga' => $harga,
+            'status' => $status,
+        ]);
 
-        return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil ditambahkan!');
+        return redirect()->route('user.iklans.payment', $iklan->id);
     }
 
     public function show(Iklan $iklan)
@@ -56,35 +63,46 @@ class UserIklanController extends Controller
     }
 
     public function edit(Iklan $iklan)
-    {
-        // Pastikan iklan milik pengguna yang sedang login
-        if ($iklan->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        // Ambil semua game untuk ditampilkan di form
-        $games = Game::all();
-
-        return view('user.iklans.edit', compact('iklan', 'games'));
+{
+    if ($iklan->user_id !== Auth::id()) {
+        abort(403, 'Unauthorized action.');
     }
+    return view('user.iklans.edit', compact('iklan'));
+}
 
     public function update(Request $request, Iklan $iklan)
     {
-        // Pastikan iklan milik pengguna yang sedang login
         if ($iklan->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 
-        // Validasi input
+        // Validasi input user
         $validated = $request->validate([
-            'game_id' => 'required|exists:games,id',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
             'durasi' => 'required|integer|min:1',
-            'harga' => 'required|integer|min:0',
-            'status' => 'required|in:aktif,nonaktif',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Update iklan
-        $iklan->update($validated);
+        // Hitung ulang harga berdasarkan durasi
+        $harga = $validated['durasi'] * 10000;
+
+        // Update data
+        $iklan->judul = $validated['judul'];
+        $iklan->deskripsi = $validated['deskripsi'];
+        $iklan->durasi = $validated['durasi'];
+        $iklan->harga = $harga;
+
+        // Jika ada upload gambar baru
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('iklans', 'public');
+            $iklan->image = $imagePath;
+        }
+
+        // Status tetap, tidak diubah user (kecuali ingin reset ke pending)
+        // $iklan->status = $iklan->status;
+
+        $iklan->save();
 
         return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil diperbarui!');
     }
@@ -101,4 +119,14 @@ class UserIklanController extends Controller
 
         return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil dihapus!');
     }
+    public function payment(Iklan $iklan)
+    {
+        // Pastikan iklan milik pengguna yang sedang login
+        if ($iklan->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('user.iklans.payment', compact('iklan'));
+    }
+
 }

@@ -10,7 +10,11 @@ class Iklan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'game_id',
+        'judul',
+        'deskripsi',
+        'image',
         'durasi',
         'harga',
         'status',
