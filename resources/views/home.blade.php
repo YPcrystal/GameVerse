@@ -1163,7 +1163,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; <script>document.write(new Date().getFullYear())</script> GameVerse. All Rights Reserved. Designed with <i class="fas fa-heart" style="color:var(--primary);"></i> for Gamers.
+            &copy; <script>document.write(new Date().getFullYear())</script> GameVerse. All Rights Reserved. Created by: ShofyAzz with <i class="fas fa-heart" style="color:var(--primary);"></i> for Gamers.
         </div>
     </footer>
     </body>
