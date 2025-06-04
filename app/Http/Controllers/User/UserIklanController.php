@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Iklan;
 use App\Models\Game;
 use Illuminate\Support\Facades\Auth;
+use Midtrans\Snap;
+use Midtrans\Config;
+use GuzzleHttp\Client;
+
+// use Midtrans\Transaction;
 
 class UserIklanController extends Controller
 {
@@ -51,6 +56,57 @@ class UserIklanController extends Controller
 
         return redirect()->route('user.iklans.payment', $iklan->id);
     }
+
+
+public function payment(Iklan $iklan)
+{
+    if ($iklan->user_id !== Auth::id()) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Konfigurasi Midtrans
+    Config::$serverKey = config('midtrans.server_key');
+    Config::$isProduction = config('midtrans.is_production');
+    Config::$isSanitized = true;
+    Config::$is3ds = true;
+
+    // Hanya buat Snap Token jika belum ada
+    if (!$iklan->snap_token) {
+        $transaction = [
+            'transaction_details' => [
+                'order_id' => 'IKLAN-' . $iklan->id . '-' . time(),
+                'gross_amount' => $iklan->harga,
+            ],
+            'customer_details' => [
+                'first_name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+            ],
+        ];
+
+        // Ambil snap token dari Midtrans Snap API
+        $client = new Client();
+        $response = $client->post('https://app.sandbox.midtrans.com/snap/v1/transactions', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode(config('midtrans.server_key') . ':'),
+            ],
+            'json' => $transaction,
+            'verify' => false, // jika SSL error di lokal
+        ]);
+
+        $body = json_decode($response->getBody(), true);
+        $snapToken = $body['token'] ?? null;
+
+        // Simpan snap_token ke database jika berhasil
+        if ($snapToken) {
+            $iklan->snap_token = $snapToken;
+            $iklan->save();
+        }
+    }
+
+    return view('user.iklans.payment', compact('iklan'));
+}
 
     public function show(Iklan $iklan)
     {
@@ -118,15 +174,6 @@ class UserIklanController extends Controller
         $iklan->delete();
 
         return redirect()->route('user.iklans.index')->with('success', 'Iklan berhasil dihapus!');
-    }
-    public function payment(Iklan $iklan)
-    {
-        // Pastikan iklan milik pengguna yang sedang login
-        if ($iklan->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        return view('user.iklans.payment', compact('iklan'));
     }
 
 }

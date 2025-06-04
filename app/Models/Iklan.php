@@ -11,6 +11,7 @@ class Iklan extends Model
 
     protected $fillable = [
         'user_id',
+        'snap_token',
         'game_id',
         'judul',
         'deskripsi',
