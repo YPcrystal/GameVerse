@@ -3,138 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'User Dashboard')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>GameVerse - Your Universe of Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: #fff;
+        :root {
+            --primary: #7000FF;
+            --secondary: #FF00E5;
+            --accent: #00FF94;
+            --dark: #0A041C;
+            --light: #F5F3FF;
+            --light-alpha: rgba(245, 243, 255, 0.75);
+            --dark-alpha: rgba(10, 4, 28, 0.85);
+            --secondary-alpha: rgba(255, 0, 229, 0.2); 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 50%, rgba(112, 0, 255, 0.15), var(--dark) 40%);
+            color: var(--light);
+            display: flex;
             min-height: 100vh;
         }
-        .sidebar .nav-link {
-            color: #adb5bd;
-            padding: 10px 15px;
-            display: block;
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 280px;
+            background: var(--dark-alpha);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo-user {
+            font-family: 'Oxanium', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 148, 0.5);
+        }
+
+        .nav-user {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex: 1 1 auto;
+        }
+
+        .nav-link {
+            color: var(--light-alpha);
             text-decoration: none;
-        }
-        .sidebar .nav-link.active, .sidebar .nav-link:hover {
-            background-color: #495057;
-            color: #fff;
-        }
-        .main-content {
-            padding: 20px;
-            flex-grow: 1;
-        }
-        .dashboard-header {
-            margin-bottom: 20px;
-        }
-        .dashboard-header h1 {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .stats-icon {
-            width: 50px;
-            height: 50px;
+            padding: 1rem;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            gap: 1rem;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+            font-weight: 500;
         }
-        .card-custom {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .nav-link:hover {
+            /* Enhanced hover effect to be more similar to active, but with secondary color */
+            background: rgba(255, 0, 229, 0.15); /* Using secondary color with alpha for hover background */
+            transform: translateX(5px);
+            color: #fff;
+            border-left: 4px solid var(--secondary); /* Border color for hover */
+            box-shadow: 0 0 10px rgba(255, 0, 229, 0.3); /* Shadow for hover */
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary), rgba(112, 0, 255, 0));
+            border-left: 4px solid var(--accent);
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(112, 0, 255, 0.4);
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: 280px;
+            padding: 2.5rem;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+        }
+        
+        /* Reusable Content Styles */
+        .page-header {
+            font-family: 'Oxanium', sans-serif;
+            font-size: 2.5rem;
+            color: var(--light);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .content-card {
+            background: rgba(25, 15, 50, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 20px var(--secondary-alpha);
+            border-color: var(--accent);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 991.98px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+                height: auto;
+                padding: 1rem;
+                z-index: 1000;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+                width: 100%;
+            }
+            .page-header {
+                font-size: 2rem;
+            }
         }
     </style>
+    @stack('styles')
 </head>
 <body>
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <nav class="sidebar d-flex flex-column">
+    <div class="sidebar">
+        <div class="logo-user">GAMEVERSE</div>
+        <nav class="nav-user">
             <a href="{{ route('user.dashboard') }}" class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
-                <i class="fas fa-home me-2"></i> Dashboard
+                <i class="fas fa-home"></i> Dashboard
             </a>
             <a href="{{ route('user.games.index') }}" class="nav-link {{ request()->routeIs('games.index') ? 'active' : '' }}">
-                <i class="fas fa-gamepad me-2"></i> Games
+                <i class="fas fa-gamepad"></i> Games
             </a>
             <a href="{{ route('user.iklans.index') }}" class="nav-link {{ request()->routeIs('iklans.index') ? 'active' : '' }}">
-                <i class="fas fa-ad me-2"></i> Iklan
+                <i class="fas fa-ad"></i> Iklan
             </a>
             <a href="{{ route('user.reviews.index') }}" class="nav-link {{ request()->routeIs('reviews.index') ? 'active' : '' }}">
-                <i class="fas fa-star me-2"></i> Review
+                <i class="fas fa-star"></i> Review
             </a>
             <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
-                <i class="fas fa-user-cog me-2"></i> Edit Profil
+                <i class="fas fa-user-cog"></i> Edit Profil
             </a>
-            <a href="{{ route('logout') }}" class="nav-link"
+            <a href="{{ route('logout') }}" class="nav-link" style="margin-top: auto;"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> Logout
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
         </nav>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <header class="dashboard-header">
-                <h1>@yield('title', 'User Dashboard')</h1>
-                <p>Selamat datang, {{ Auth::user()->name }}!</p>
-            </header>
-
-            <div class="row g-4">
-                <!-- Card Statistik -->
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-primary text-white">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Review</h5>
-                                <p class="mb-0">{{ $totalReviews ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-success text-white">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Iklan</h5>
-                                <p class="mb-0">{{ $totalAds ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-custom p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="stats-icon bg-gradient-warning text-white">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h5 class="mb-0">Total Games</h5>
-                                <p class="mb-0">{{ $totalGames ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Area Konten -->
-            <div class="mt-4">
-                @yield('content')
-            </div>
-        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <main class="main-content">
+        @yield('content')
+    </main>
+
+    @stack('scripts')
 </body>
 </html>

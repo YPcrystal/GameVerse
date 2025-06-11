@@ -13,6 +13,9 @@
             --accent: #00FF94;
             --dark: #0A041C;
             --light: #F5F3FF;
+            --light-alpha: rgba(245, 243, 255, 0.75); /* Added for consistency */
+            --dark-alpha: rgba(10, 4, 28, 0.85); /* Added for consistency */
+            --secondary-alpha: rgba(255, 0, 229, 0.2); /* Added for consistency */
             --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         }
 
@@ -24,7 +27,9 @@
 
         body {
             font-family: 'Oxanium', sans-serif;
-            background: linear-gradient(135deg, var(--dark) 0%, #1A0A35 100%);
+            /* Changed body background to match user layout gradient */
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 50%, rgba(112, 0, 255, 0.15), var(--dark) 40%);
             color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
@@ -36,7 +41,8 @@
             top: 0;
             width: 100%;
             padding: 1rem 5%;
-            background: rgba(10, 4, 28, 0.95);
+            /* Changed header background to match user layout */
+            background: var(--dark-alpha);
             backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-between;
@@ -61,7 +67,7 @@
         }
 
         .nav-links a {
-            color: var(--light);
+            color: var(--light-alpha); /* Adjusted to light-alpha for consistency */
             text-decoration: none;
             font-weight: 500;
             position: relative;
@@ -86,23 +92,23 @@
         }
         
         .nav-links a:hover {
-            color: var(--accent); /* Tambahan hover effect warna teks */
+            color: var(--accent); /* Consistent hover color */
         }
 
         .search-container {
             position: relative;
-            width: 300px; /* Sedikit diperkecil agar lebih seimbang */
+            width: 300px;
         }
 
         .search-input {
             width: 100%;
-            padding: 0.9rem 2rem 0.9rem 1.5rem; /* Adjusted padding */
+            padding: 0.9rem 2rem 0.9rem 1.5rem;
             border: 2px solid rgba(255,255,255,0.15);
             border-radius: 30px;
             background: rgba(255,255,255,0.08);
             color: var(--light);
             font-size: 1rem;
-            font-family: 'Roboto', sans-serif; /* Menggunakan Roboto untuk input */
+            font-family: 'Roboto', sans-serif;
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
@@ -115,17 +121,17 @@
 
         .search-button {
             position: absolute;
-            right: 6px; /* Adjusted position */
+            right: 6px;
             top: 50%;
             transform: translateY(-50%);
             background: var(--gradient);
             border: none;
-            padding: 0.5rem 1.2rem; /* Adjusted padding */
-            border-radius: 20px; /* Adjusted border-radius */
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 600; /* Added font weight */
+            font-weight: 600;
         }
 
         .search-button:hover {
@@ -133,7 +139,7 @@
             box-shadow: 0 0 20px rgba(112,0,255,0.4);
         }
         
-        .search-button i { /* Jika ingin menggunakan ikon */
+        .search-button i {
             font-size: 0.9rem;
         }
 
@@ -156,14 +162,15 @@
             transform: translate(-50%, -50%);
             width: 150vw;
             height: 150vh;
-            background: radial-gradient(circle at 50% 50%, rgba(112,0,255,0.15) 0%, rgba(10,4,28,0) 70%);
-            z-index: 0; /* Diubah agar di bawah konten hero */
+            /* Changed radial gradient to match user layout */
+            background: radial-gradient(circle at 50% 50%, rgba(112,0,255,0.15) 0%, var(--dark) 70%);
+            z-index: 0;
             animation: pulse 6s infinite;
         }
 
         .hero-content {
             max-width: 800px;
-            position: relative; /* Pastikan di atas pseudo-element */
+            position: relative;
             z-index: 1;
         }
 
@@ -182,7 +189,7 @@
             margin-bottom: 2.5rem;
             opacity: 0.9;
             max-width: 600px;
-            font-family: 'Roboto', sans-serif; /* Lebih cocok untuk paragraf */
+            font-family: 'Roboto', sans-serif;
         }
 
         .cta-container {
@@ -215,6 +222,7 @@
         .cta-secondary {
             border: 2px solid var(--primary);
             color: var(--primary);
+            /* Changed background to rgba(112,0,255,0.1) for consistency */
             background: rgba(112,0,255,0.1);
         }
 
@@ -224,8 +232,8 @@
         }
         
         /* General Section Styling */
-        .section-padding { /* Kelas umum untuk padding section */
-             padding: 6rem 5%;
+        .section-padding {
+            padding: 6rem 5%;
         }
 
         .section-title {
@@ -237,10 +245,10 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* --- STYLING UNTUK SECTION BARU --- */
+        /* --- STYLING FOR NEW SECTIONS --- */
 
-        /* Features Section (Section Baru) */
-        .features {
+        /* Features Section */
+        .features-grid { /* Changed to features-grid for better semantic naming and flexibility */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
@@ -261,7 +269,7 @@
 
         .feature iframe {
             width: 100%;
-            height: 200px; /* Sesuaikan tinggi iframe */
+            height: 200px;
             border-radius: 10px;
             margin-bottom: 1.5rem;
             border: none;
@@ -279,22 +287,19 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* New Releases Section (Section Baru) */
-        .new-releases {
-            /* Padding sudah diatur oleh .section-padding */
-        }
+        /* New Releases Section */
         .new-releases-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2.5rem;
         }
-        .new-releases-header h2 { /* Menggunakan style dari .section-title tapi tidak terpusat */
+        .new-releases-header h2 {
             font-size: 2.5rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0; /* Reset margin bottom dari .section-title jika dipakai */
+            margin-bottom: 0;
         }
         .new-releases-header a {
             color: var(--accent);
@@ -311,16 +316,16 @@
         }
 
         .carousel {
-            display: grid; /* Sederhana, untuk JS carousel bisa lebih kompleks */
+            display: grid;
             grid-auto-flow: column;
-            grid-auto-columns: calc((100% / 4) - 1.875rem); /* Tampil 4 item, dikurangi gap */
+            grid-auto-columns: calc((100% / 4) - 1.875rem);
             gap: 2.5rem;
-            overflow-x: auto; /* Memungkinkan scroll horizontal */
-            padding-bottom: 1.5rem; /* Ruang untuk scrollbar */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            overflow-x: auto;
+            padding-bottom: 1.5rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        .carousel::-webkit-scrollbar { /* Chrome, Safari, Opera */
+        .carousel::-webkit-scrollbar {
             display: none;
         }
 
@@ -338,7 +343,7 @@
         .carousel-item img {
             width: 100%;
             height: auto;
-            aspect-ratio: 3/4; /* Jaga rasio aspek gambar */
+            aspect-ratio: 3/4;
             object-fit: cover;
             display: block;
         }
@@ -363,17 +368,14 @@
         }
 
 
-        /* Best Games Section (Section Baru) */
-        .best-games {
-            /* Padding sudah diatur oleh .section-padding */
-        }
+        /* Best Games Section */
         .best-games-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2.5rem;
         }
-         .best-games-header h2 { /* Menggunakan style dari .section-title tapi tidak terpusat */
+        .best-games-header h2 {
             font-size: 2.5rem;
             background: var(--gradient);
             -webkit-background-clip: text;
@@ -389,7 +391,7 @@
             border-radius: 20px;
             transition: all 0.3s ease;
         }
-         .best-games-header a:hover {
+        .best-games-header a:hover {
             background-color: var(--accent);
             color: var(--dark);
         }
@@ -426,16 +428,16 @@
 
         .best-games-list {
             display: grid;
-            gap: 1.5rem; /* Lebih rapat dari game-card biasa */
+            gap: 1.5rem;
         }
         .best-games-item {
             display: grid;
-            grid-template-columns: 80px 1fr auto; /* Kolom untuk gambar, info, skor */
+            grid-template-columns: 80px 1fr auto;
             grid-template-areas: 
                 "image title score"
                 "image acclaim platform"
                 "image progress progress";
-            gap: 0.5rem 1.5rem; /* gap baris dan kolom */
+            gap: 0.5rem 1.5rem;
             align-items: center;
             background: rgba(255,255,255,0.05);
             padding: 1rem;
@@ -451,7 +453,7 @@
         .best-games-item img {
             grid-area: image;
             width: 80px;
-            height: 100px; /* Tinggi spesifik untuk daftar */
+            height: 100px;
             object-fit: cover;
             border-radius: 8px;
         }
@@ -471,7 +473,7 @@
             padding: 0.5rem 0.8rem;
             border-radius: 8px;
             text-align: center;
-            justify-self: end; /* Rata kanan */
+            justify-self: end;
         }
         .best-games-item .acclaim {
             grid-area: acclaim;
@@ -487,7 +489,7 @@
             padding: 0.2rem 0.5rem;
             border-radius: 5px;
             text-transform: uppercase;
-            justify-self: start; /* Rata kiri */
+            justify-self: start;
         }
         .best-games-item .progress-bar {
             grid-area: progress;
@@ -495,16 +497,10 @@
             background: var(--gradient);
             border-radius: 4px;
             margin-top: 0.5rem;
-            width: 100%; /* Skor akan menentukan lebar ini via JS nanti */
+            width: 100%;
         }
 
-        /* --- AKHIR STYLING UNTUK SECTION BARU --- */
-
-        /* Featured Games Section (Sudah Ada) */
-        .featured-games {
-            /* Padding sudah diatur oleh .section-padding */
-        }
-
+        /* Featured Games Section */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -528,7 +524,7 @@
 
         .game-thumbnail {
             position: relative;
-            padding-bottom: 60%; /* Aspect ratio 5:3 */
+            padding-bottom: 60%;
             overflow: hidden;
         }
 
@@ -565,13 +561,12 @@
             display: flex;
             gap: 0.8rem;
             color: rgba(255,255,255,0.7);
-            font-size: 1.2rem; /* Icon lebih besar */
+            font-size: 1.2rem;
         }
 
-        /* Video Features Section (Sudah Ada) */
+        /* Video Features Section */
         .video-features {
             background: rgba(0,0,0,0.2);
-            /* Padding sudah diatur oleh .section-padding */
         }
 
         .video-grid {
@@ -596,7 +591,7 @@
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
@@ -619,18 +614,14 @@
             color: var(--accent);
             font-size: 1.3rem;
         }
-        .video-info p { /* Menambahkan style untuk deskripsi video jika ada */
+        .video-info p {
             font-family: 'Roboto', sans-serif;
             font-size: 0.95rem;
             color: rgba(255,255,255,0.8);
         }
 
 
-        /* Streamers Section (Sudah Ada) */
-        .streamers-section {
-           /* Padding sudah diatur oleh .section-padding */
-        }
-
+        /* Streamers Section */
         .streamers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -641,10 +632,10 @@
         .streamer-card {
             background: rgba(255,255,255,0.05);
             border-radius: 15px;
-            padding: 2rem; /* Penyesuaian padding */
+            padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1); /* Tambah border konsisten */
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .streamer-card:hover {
@@ -656,16 +647,16 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            margin: 0 auto 1.5rem; /* Penyesuaian margin */
+            margin: 0 auto 1.5rem;
             border: 3px solid var(--primary);
-            object-fit: cover; /* Pastikan gambar avatar pas */
+            object-fit: cover;
         }
-        .streamer-card h3 { /* Nama streamer */
+        .streamer-card h3 {
             font-size: 1.4rem;
             color: var(--accent);
             margin-bottom: 0.5rem;
         }
-        .streamer-card p { /* Info tambahan streamer */
+        .streamer-card p {
             font-size: 0.9rem;
             color: rgba(255,255,255,0.7);
             font-family: 'Roboto', sans-serif;
@@ -674,27 +665,27 @@
 
         /* Footer */
         footer {
-            background: var(--dark); /* Lebih gelap agar kontras */
-            padding: 5rem 5% 3rem; /* Penyesuaian padding */
+            background: var(--dark);
+            padding: 5rem 5% 3rem;
             margin-top: 6rem;
-            border-top: 1px solid rgba(255,255,255,0.1); /* Garis pemisah halus */
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Penyesuaian minmax */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 3rem;
-            margin-bottom: 3rem; /* Ruang sebelum copyright */
+            margin-bottom: 3rem;
         }
 
         .footer-section h4 {
-            font-size: 1.4rem; /* Sedikit lebih besar */
+            font-size: 1.4rem;
             margin-bottom: 1.5rem;
             color: var(--accent);
-            font-weight: 700; /* Lebih tebal */
+            font-weight: 700;
         }
 
-        .footer-section p { /* Untuk deskripsi di footer */
+        .footer-section p {
             font-family: 'Roboto', sans-serif;
             color: rgba(255,255,255,0.7);
             margin-bottom: 1.5rem;
@@ -705,39 +696,39 @@
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             display: block;
-            margin-bottom: 1rem; /* Penyesuaian margin */
-            transition: color 0.3s ease, padding-left 0.3s ease; /* Transisi halus */
+            margin-bottom: 1rem;
+            transition: color 0.3s ease, padding-left 0.3s ease;
             font-family: 'Roboto', sans-serif;
             font-size: 0.95rem;
         }
 
         .footer-links a:hover {
             color: var(--primary);
-            padding-left: 5px; /* Efek indentasi saat hover */
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: 1.2rem; /* Sedikit lebih lebar */
-            margin-top: 1rem; /* Penyesuaian margin */
+            gap: 1.2rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
-            width: 45px; /* Sedikit lebih besar */
+            width: 45px;
             height: 45px;
             border-radius: 50%;
             background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--light); /* Warna icon lebih terang */
-            font-size: 1.2rem; /* Ukuran icon */
+            color: var(--light);
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
             background: var(--primary);
-            transform: translateY(-4px) scale(1.1); /* Efek lebih menonjol */
+            transform: translateY(-4px) scale(1.1);
             color: white;
         }
         
@@ -766,8 +757,8 @@
             .search-container {
                 width: 280px;
             }
-            .carousel { /* Tampil 3 item di tablet */
-              grid-auto-columns: calc((100% / 3) - 1.7rem); 
+            .carousel {
+                grid-auto-columns: calc((100% / 3) - 1.7rem); 
             }
         }
 
@@ -776,14 +767,14 @@
                 padding: 1rem 3%;
             }
             .nav-links {
-                 display: none; /* Implementasi menu mobile (hamburger) akan dibutuhkan di sini */
+                display: none;
             }
-            .search-container { /* Sembunyikan search bar default, bisa dipindah ke menu mobile */
+            .search-container {
                 display: none; 
             }
 
             .hero {
-                padding: 120px 5% 5%; /* Kurangi padding atas karena fixed header */
+                padding: 120px 5% 5%;
                 text-align: center;
             }
             .hero-content {
@@ -792,7 +783,7 @@
             .hero h1 {
                 font-size: 3.2rem;
             }
-             .hero p {
+            .hero p {
                 font-size: 1.3rem;
                 max-width: 100%;
             }
@@ -802,27 +793,27 @@
             .section-title {
                 font-size: 2.5rem;
             }
-             .new-releases-header, .best-games-header {
+            .new-releases-header, .best-games-header {
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
             }
-            .carousel { /* Tampil 2 item di mobile besar */
-              grid-auto-columns: calc((100% / 2) - 1.25rem); 
+            .carousel {
+                grid-auto-columns: calc((100% / 2) - 1.25rem); 
             }
-             .best-games-item {
+            .best-games-item {
                 grid-template-columns: 60px 1fr auto;
                 grid-template-areas: 
                     "image title title"
                     "image score platform"
-                    "progress progress progress"; /* Sesuaikan area untuk mobile */
+                    "progress progress progress";
                 gap: 0.5rem 1rem;
             }
             .best-games-item img {
                 width: 60px;
                 height: 80px;
             }
-             .best-games-item h3 {
+            .best-games-item h3 {
                 font-size: 1.1rem;
             }
             .best-games-item .score {
@@ -836,18 +827,18 @@
                 font-size: 1.8rem;
             }
             .hero h1 {
-                font-size: 2.5rem; /* Lebih kecil lagi */
+                font-size: 2.5rem;
             }
             .hero p {
                 font-size: 1.1rem;
             }
             .cta-container {
                 flex-direction: column;
-                align-items: center; /* Tombol CTA ditengah */
+                align-items: center;
                 gap: 1.5rem;
             }
             .cta {
-                width: 90%; /* Tombol CTA lebih lebar */
+                width: 90%;
                 max-width: 300px;
                 justify-content: center;
                 padding: 1rem 2rem;
@@ -858,22 +849,22 @@
             .feature h3 {
                 font-size: 1.5rem;
             }
-            .carousel { /* Tampil 1 item penuh + sedikit item berikutnya di mobile kecil */
-              grid-auto-columns: 80%; 
+            .carousel {
+                grid-auto-columns: 80%; 
             }
             .best-games-platforms button {
                 padding: 0.7rem 1.5rem;
                 font-size: 0.9rem;
             }
             .footer-content {
-                grid-template-columns: 1fr; /* Footer stack di mobile */
+                grid-template-columns: 1fr;
                 text-align: center;
             }
             .social-links {
                 justify-content: center;
             }
         }
-         @media (max-width: 480px) {
+        @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2.2rem;
             }
@@ -887,27 +878,27 @@
                 font-size: 1.8rem;
             }
             .carousel { 
-              grid-auto-columns: 90%; 
+                grid-auto-columns: 90%; 
             }
         }
-
     </style>
 </head>
 <body>
     <header>
         <div class="logo">GAMEVERSE</div>
-        <nav class="nav-links"> <a href="#home">Home</a>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
             <a href="/games">Games</a>
-            <a href="/iklans">iklan</a>
+            <a href="/iklans">Iklan</a>
             @auth
                 @if(Auth::user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                 @else
                     <a href="{{ route('user.dashboard') }}">User Dashboard</a>
-                @endif             
+                @endif
                 <a href="{{ route('logout') }}" 
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                   Logout
+                    Logout
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -919,8 +910,9 @@
         </nav>
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search games, reviews...">
-            <button class="search-button"><i class="fas fa-search"></i></button> </div>
-        </header>
+            <button class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
 
     <main>
         <section class="hero">
@@ -940,22 +932,39 @@
             </div>
         </section>
 
-                <section class="features section-padding" id="features">
+        <section class="features section-padding" id="features">
             <h2 class="section-title">Why GameVerse?</h2>
-
             <p style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; font-family: 'Roboto', sans-serif; line-height: 1.7; opacity: 0.9;">
                 At GameVerse, we understand your passion for the gaming world. More than just a platform, we are your fellow travelers in exploring the limitless gaming universe. We believe every game has a unique story, and you deserve the best way to discover, experience, and share them. This is why GameVerse exists for you:
             </p>
             
             <div class="features-grid">
                 <div class="feature">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_23" 
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
                         title="YouTube video player" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen>
                     </iframe>
                     <h3>Immersive Reviews</h3>
                     <p>Read detailed and engaging reviews from real players.</p>
+                </div>
+                 <div class="feature">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/xvFZjo5PgG0" 
+                        title="YouTube video player" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <h3>Live Streams & Tournaments</h3>
+                    <p>Watch your favorite streamers and join exciting tournaments.</p>
+                </div>
+                 <div class="feature">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/L_A70c79J7k" 
+                        title="YouTube video player" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <h3>Community & Support</h3>
+                    <p>Connect with other gamers and get support from our dedicated team.</p>
                 </div>
             </div>
         </section>
@@ -967,204 +976,258 @@
             </div>
             <div class="carousel">
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,fantasy" alt="Game 1">
+                    <img src="https://source.unsplash.com/random/300x400/?game,fantasy,1" alt="Game 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,scifi" alt="Game 2">
+                    <img src="https://source.unsplash.com/random/300x400/?game,scifi,2" alt="Game 2">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,adventure" alt="Game 3">
+                    <img src="https://source.unsplash.com/random/300x400/?game,adventure,3" alt="Game 3">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,action" alt="Game 4">
+                    <img src="https://source.unsplash.com/random/300x400/?game,action,4" alt="Game 4">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,rpg" alt="Game 5">
+                    <img src="https://source.unsplash.com/random/300x400/?game,rpg,5" alt="Game 5">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,strategy" alt="Game 6">
+                    <img src="https://source.unsplash.com/random/300x400/?game,strategy,6" alt="Game 6">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://source.unsplash.com/random/300x400/?game,sports" alt="Game 7">
+                    <img src="https://source.unsplash.com/random/300x400/?game,shooter,7" alt="Game 7">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://source.unsplash.com/random/300x400/?game,horror,8" alt="Game 8">
                 </div>
             </div>
-            <div class="carousel-nav">
-                <button class="prev" aria-label="Previous Slide">←</button>
-                <button class="next" aria-label="Next Slide">→</button>
+             <div class="carousel-nav">
+                <button onclick="scrollCarousel(-1)">&#8249;</button>
+                <button onclick="scrollCarousel(1)">&#8250;</button>
             </div>
-        </section>
-
-        <section class="featured-games section-padding" id="games">
-            <h2 class="section-title">Trending Now</h2> <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-thumbnail">
-                        <img src="https://source.unsplash.com/random/800x480/?cyberpunk-game" alt="Cyber Revolution Thumbnail">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Cyber Revolution</h3>
-                        <p class="game-genre">Action RPG • Open World</p>
-                        <div class="game-platforms">
-                            <i class="fab fa-windows" title="Windows"></i>
-                            <i class="fab fa-playstation" title="Playstation"></i>
-                            <i class="fab fa-xbox" title="Xbox"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-thumbnail">
-                        <img src="https://source.unsplash.com/random/800x480/?fantasy-game" alt="Game Thumbnail">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Mystic Realms</h3>
-                        <p class="game-genre">MMORPG • Fantasy</p>
-                        <div class="game-platforms">
-                            <i class="fab fa-windows" title="Windows"></i>
-                            <i class="fab fa-apple" title="MacOS"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-thumbnail">
-                        <img src="https://source.unsplash.com/random/800x480/?space-game" alt="Game Thumbnail">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Galaxy Frontiers</h3>
-                        <p class="game-genre">Strategy • Sci-Fi</p>
-                        <div class="game-platforms">
-                            <i class="fab fa-windows" title="Windows"></i>
-                            <i class="fab fa-linux" title="Linux"></i>
-                        </div>
-                    </div>
-                </div>
-                 </div>
         </section>
 
         <section class="best-games section-padding" id="best-games">
             <div class="best-games-header">
-                <h2>Best Games By Platform</h2>
-                <a href="#">BROWSE ALL GAMES</a>
+                <h2>Top Rated Games</h2>
+                <a href="#">VIEW ALL</a>
             </div>
             <div class="best-games-platforms">
-                <button class="active">PS5</button>
+                <button class="active">All Platforms</button>
                 <button>PC</button>
-                <button>Nintendo Switch</button>
-                <button>PS4</button>
-                <button>Xbox One</button>
-                <button>Xbox Series X</button>
+                <button>PlayStation</button>
+                <button>Xbox</button>
+                <button>Nintendo</button>
+                <button>Mobile</button>
             </div>
             <div class="best-games-list">
                 <div class="best-games-item">
-                    <img src="https://source.unsplash.com/random/160x200/?game,elden-ring" alt="Elden Ring">
-                    <h3>1. Elden Ring</h3>
-                    <div class="score">96</div>
-                    <div class="acclaim">Universal Acclaim</div>
-                    <div class="platform-icon">PS5</div>
-                    <div class="progress-bar" style="width: 96%;"></div>
-                </div>
-                <div class="best-games-item">
-                    <img src="https://source.unsplash.com/random/160x200/?game,baldurs-gate" alt="Baldur's Gate 3">
-                    <h3>2. Baldur's Gate 3</h3>
-                    <div class="score">96</div>
-                    <div class="acclaim">Universal Acclaim</div>
-                    <div class="platform-icon">PS5</div>
-                    <div class="progress-bar" style="width: 96%;"></div>
-                </div>
-                <div class="best-games-item">
-                    <img src="https://source.unsplash.com/random/160x200/?game,zelda" alt="Zelda Game">
-                    <h3>3. Legend of Zelda: TotK</h3>
-                    <div class="score">95</div>
-                    <div class="acclaim">Universal Acclaim</div>
-                    <div class="platform-icon">Switch</div>
+                    <img src="https://source.unsplash.com/random/80x100/?game,cyberpunk" alt="Cyberpunk Adventure">
+                    <h3>Cyberpunk Quest</h3>
+                    <div class="score">9.5</div>
+                    <span class="acclaim">Critically Acclaimed</span>
+                    <span class="platform-icon">PC</span>
                     <div class="progress-bar" style="width: 95%;"></div>
                 </div>
-                 </div>
+                <div class="best-games-item">
+                    <img src="https://source.unsplash.com/random/80x100/?game,medieval" alt="Medieval Legend">
+                    <h3>Medieval Legend</h3>
+                    <div class="score">9.2</div>
+                    <span class="acclaim">Fan Favorite</span>
+                    <span class="platform-icon">PS5</span>
+                    <div class="progress-bar" style="width: 92%;"></div>
+                </div>
+                <div class="best-games-item">
+                    <img src="https://source.unsplash.com/random/80x100/?game,space" alt="Cosmic Conquerors">
+                    <h3>Cosmic Conquerors</h3>
+                    <div class="score">8.9</div>
+                    <span class="acclaim">Highly Recommended</span>
+                    <span class="platform-icon">Xbox</span>
+                    <div class="progress-bar" style="width: 89%;"></div>
+                </div>
+                <div class="best-games-item">
+                    <img src="https://source.unsplash.com/random/80x100/?game,racing" alt="Speed Demon">
+                    <h3>Speed Demon</h3>
+                    <div class="score">8.7</div>
+                    <span class="acclaim">Great Fun!</span>
+                    <span class="platform-icon">Switch</span>
+                    <div class="progress-bar" style="width: 87%;"></div>
+                </div>
+            </div>
         </section>
 
+        <section class="featured-games section-padding" id="games">
+            <h2 class="section-title">Featured Games</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-thumbnail">
+                        <img src="https://source.unsplash.com/random/600x360/?game,openworld" alt="Open World RPG">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Echoes of Eternity</h3>
+                        <p class="game-genre">Open World RPG</p>
+                        <div class="game-platforms">
+                            <i class="fab fa-windows"></i>
+                            <i class="fab fa-playstation"></i>
+                            <i class="fab fa-xbox"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-thumbnail">
+                        <img src="https://source.unsplash.com/random/600x360/?game,fps" alt="Sci-Fi Shooter">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Galactic Warfare</h3>
+                        <p class="game-genre">Sci-Fi FPS</p>
+                        <div class="game-platforms">
+                            <i class="fab fa-windows"></i>
+                            <i class="fab fa-xbox"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-thumbnail">
+                        <img src="https://source.unsplash.com/random/600x360/?game,puzzle" alt="Mystery Puzzle">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Enigma Solved</h3>
+                        <p class="game-genre">Puzzle / Adventure</p>
+                        <div class="game-platforms">
+                            <i class="fas fa-mobile-alt"></i>
+                            <i class="fab fa-windows"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-thumbnail">
+                        <img src="https://source.unsplash.com/random/600x360/?game,sports" alt="Football Simulator">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Ultimate Kickoff</h3>
+                        <p class="game-genre">Sports Simulation</p>
+                        <div class="game-platforms">
+                            <i class="fab fa-playstation"></i>
+                            <i class="fab fa-xbox"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section class="video-features section-padding" id="streams"> <h2 class="section-title">Latest Videos & Streams</h2>
+        <section class="video-features section-padding" id="streams">
+            <h2 class="section-title">Latest Game Trailers & Streams</h2>
             <div class="video-grid">
                 <div class="video-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/exampleVideo1" title="Gameplay Video 1" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/PjE2Kj_zJ-o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h3>Epic Gameplay Montage</h3>
-                        <p>Check out these incredible moments from top players.</p>
+                        <h3>Upcoming RPG: The Elder Scrolls VI Teaser</h3>
+                        <p>Get a glimpse into the next epic adventure from Bethesda Softworks.</p>
                     </div>
                 </div>
-                 <div class="video-card">
+                <div class="video-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/exampleVideo2" title="Gameplay Video 2" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/K0GVSb3z3XQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h3>Developer Insights: New Update</h3>
-                         <p>The creators discuss upcoming features and changes.</p>
+                        <h3>Live Stream: Pro Gamer PvP Showdown</h3>
+                        <p>Watch professional players battle it out in the ultimate PvP arena.</p>
                     </div>
                 </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/SSxL5V41W1s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Indie Spotlight: Lumina's Journey</h3>
+                        <p>Explore the enchanting world of this beautiful new indie game.</p>
+                    </div>
                 </div>
+            </div>
         </section>
 
         <section class="streamers-section section-padding">
             <h2 class="section-title">Featured Streamers</h2>
             <div class="streamers-grid">
                 <div class="streamer-card">
-                    <img src="https://source.unsplash.com/random/100x100/?person,gamer,female" alt="Streamer Avatar" class="streamer-avatar">
-                    <h3>NinjaQueen</h3>
-                    <p>Pro FPS Player | Daily Streams</p>
+                    <img src="https://source.unsplash.com/random/100x100/?person,gamer,man" alt="Streamer 1" class="streamer-avatar">
+                    <h3>GamingGuru</h3>
+                    <p>Playing: Valorant, Apex Legends</p>
+                    <p>Followers: 1.2M</p>
                 </div>
                 <div class="streamer-card">
-                     <img src="https://source.unsplash.com/random/100x100/?person,gamer,male" alt="Streamer Avatar" class="streamer-avatar">
-                    <h3>CosmicVoyager</h3>
-                    <p>Variety Streamer | RPG & Indie Games</p>
+                    <img src="https://source.unsplash.com/random/100x100/?person,gamer,woman" alt="Streamer 2" class="streamer-avatar">
+                    <h3>PixelPrincess</h3>
+                    <p>Playing: Zelda, Stardew Valley</p>
+                    <p>Followers: 850K</p>
                 </div>
-                 <div class="streamer-card">
-                     <img src="https://source.unsplash.com/random/100x100/?person,streamer" alt="Streamer Avatar" class="streamer-avatar">
-                    <h3>PixelPioneer</h3>
-                    <p>Retro Gaming Expert | Community Playthroughs</p>
+                <div class="streamer-card">
+                    <img src="https://source.unsplash.com/random/100x100/?person,gamer,asian" alt="Streamer 3" class="streamer-avatar">
+                    <h3>CodeBreaker</h3>
+                    <p>Playing: League of Legends, Dota 2</p>
+                    <p>Followers: 980K</p>
                 </div>
+                <div class="streamer-card">
+                    <img src="https://source.unsplash.com/random/100x100/?person,gamer,black" alt="Streamer 4" class="streamer-avatar">
+                    <h3>EpicQuestor</h3>
+                    <p>Playing: Elden Ring, Baldur's Gate 3</p>
+                    <p>Followers: 700K</p>
                 </div>
+            </div>
         </section>
-
     </main>
 
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>About GameVerse</h4>
-                <p>Your ultimate destination for game reviews, news, and a vibrant community of gamers. Discover, discuss, and dive deep into the world of gaming.</p>
+                <p>Your ultimate platform for discovering new games, watching live streams, and connecting with the gaming community worldwide.</p>
             </div>
             <div class="footer-section">
-                <h4>Explore</h4>
+                <h4>Quick Links</h4>
                 <div class="footer-links">
-                    <a href="#games">All Games</a>
+                    <a href="#home">Home</a>
+                    <a href="#games">Games</a>
                     <a href="#new-releases">New Releases</a>
-                    <a href="#">Latest News</a>
-                    <a href="#">Game Reviews</a>
+                    <a href="#best-games">Top Rated</a>
+                    <a href="#streams">Live Streams</a>
                 </div>
             </div>
             <div class="footer-section">
                 <h4>Support</h4>
                 <div class="footer-links">
-                    <a href="#">Help Center</a>
-                    <a href="#">Contact Us</a>
                     <a href="#">FAQ</a>
+                    <a href="#">Contact Us</a>
                     <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
                 </div>
             </div>
             <div class="footer-section">
-                <h4>Connect</h4>
+                <h4>Connect With Us</h4>
                 <div class="social-links">
-                    <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-                    <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; <script>document.write(new Date().getFullYear())</script> GameVerse. All Rights Reserved. Created by: ShofyAzz with <i class="fas fa-heart" style="color:var(--primary);"></i> for Gamers.
+            &copy; 2025 GameVerse. All rights reserved.
         </div>
     </footer>
-    </body>
+
+    <script>
+        function scrollCarousel(direction) {
+            const carousel = document.querySelector('.carousel');
+            const itemWidth = carousel.querySelector('.carousel-item').offsetWidth + 40; // Item width + gap
+            carousel.scrollBy({
+                left: direction * itemWidth,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
 </html>
