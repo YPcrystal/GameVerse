@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Iklan - GameVerse</title>
+    <title>Pembayaran Iklan - nexioarena</title>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -223,7 +223,7 @@
         <div class="payment-header">
             <div class="payment-logo">
                 <i class="fas fa-gamepad"></i>
-                GAMEVERSE
+                nexioarena
             </div>
             <h1 class="payment-title">Pembayaran Iklan</h1>
             <p class="payment-subtitle">Selesaikan pembayaran untuk mempublikasikan iklan Anda</p>

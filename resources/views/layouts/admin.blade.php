@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVerse - Admin Dashboard</title>
+    <title>nexioarena - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -110,7 +110,7 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="logo-admin">GAMEVERSE ADMIN</div>
+        <div class="logo-admin">nexioarena ADMIN</div>
         <nav class="nav-admin">
             <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-tachometer-alt"></i>

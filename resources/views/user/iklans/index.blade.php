@@ -157,7 +157,7 @@
                 <span class="ads-label"><i class="fas fa-money-bill-wave"></i> Rp{{ number_format($iklan->harga, 0, ',', '.') }}</span>
                 @php
                     $statusClass = $iklan->status === 'aktif' ? 'aktif' : ($iklan->status === 'pending' ? 'pending' : 'other');
-                    $statusText = $iklan->status === 'aktif' ? 'Aktif' : ($iklan->status === 'pending' ? 'Menunggu Pembayaran' : ucfirst($iklan->status));
+                    $statusText = $iklan->status === 'aktif' ? 'Aktif' : ($iklan->status === 'pending' ? 'Pending' : ucfirst($iklan->status));
                 @endphp
                 <span class="ads-badge {{ $statusClass }}">{{ $statusText }}</span>
             </div>

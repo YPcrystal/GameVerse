@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVerse - Your Universe of Games</title>
+    <title>nexioarena - Your Universe of Games</title>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -159,7 +159,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo-user">GAMEVERSE</div>
+        <div class="logo-user">nexioarena</div>
         <nav class="nav-user">
             <a href="{{ route('user.dashboard') }}" class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard

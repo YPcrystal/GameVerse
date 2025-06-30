@@ -24,22 +24,21 @@ class MidtransCallbackController extends Controller
             'fraud_status' => $fraudStatus,
         ]);
 
-        // Ambil id iklan dari order_id (format: IKLAN-{id}-{timestamp})
+        // Ambil id iklan dari order_id
         $iklanId = null;
         if ($orderId && preg_match('/IKLAN-(\d+)-/', $orderId, $matches)) {
             $iklanId = $matches[1];
         }
+
+        Log::info('Parsed iklanId from order_id', ['iklanId' => $iklanId]);
 
         if ($iklanId) {
             $iklan = Iklan::find($iklanId);
             if ($iklan) {
                 switch ($transactionStatus) {
                     case 'capture':
-                        if ($paymentType == 'credit_card' && $fraudStatus == 'challenge') {
-                            $iklan->status = 'challenge';
-                        } else {
-                            $iklan->status = 'paid';
-                        }
+                        $iklan->status = ($paymentType == 'credit_card' && $fraudStatus == 'challenge')
+                            ? 'challenge' : 'paid';
                         break;
                     case 'settlement':
                         $iklan->status = 'paid';
@@ -58,10 +57,14 @@ class MidtransCallbackController extends Controller
                         break;
                 }
                 $iklan->save();
+                Log::info('Status iklan updated', ['status' => $iklan->status]);
+            } else {
+                Log::warning('Iklan not found', ['iklanId' => $iklanId]);
             }
         }
 
-        return response()->json(['status' => 'OK']);
+        // Ini sangat penting: pastikan Midtrans dapat respon 200
+        return response()->json(['status' => 'OK'], 200);
     }
 }
-
+// End of MidtransCallbackController.php
