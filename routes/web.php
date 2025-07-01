@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require _DIR_.'/auth.php';
+require __DIR__.'/auth.php';
 
 // Rute untuk Forum Diskusi (jika Anda menggunakan package forum)
 // Sesuaikan dengan package forum yang Anda gunakan
