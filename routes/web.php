@@ -24,10 +24,6 @@ use App\Http\Controllers\User\UserProfileController; //klo user memiliki banyak 
 
 // Rute untuk halaman beranda dan home
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/home', function () {
     return view('home');
 });
 
@@ -77,7 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require _DIR_.'/auth.php';
 
 // Rute untuk Forum Diskusi (jika Anda menggunakan package forum)
 // Sesuaikan dengan package forum yang Anda gunakan
